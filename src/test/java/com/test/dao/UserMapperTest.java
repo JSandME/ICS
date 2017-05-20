@@ -25,6 +25,6 @@ public class UserMapperTest extends TestSupport {
         /*for (User user : users) {
             System.err.println(user);
         }*/
-        end();
+        end(); 
     }
 }
