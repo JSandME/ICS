@@ -54,4 +54,10 @@ public interface RoleMapper extends GenericDao<Role, String> {
     
     //插入role_permission表
     int insertPermissionsByRoleId(List<Map> listdata);
+    
+    //获取所有角色权限
+    List<Map> selectAllRolePermission();
+    
+    //根据roleid删除权限
+    int deleteByRoleId(String id);
 }

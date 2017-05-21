@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.factoring.web.dao.RoleMapper">
     <resultMap id="BaseResultMap" type="com.factoring.web.model.Role">
-        <id column="id" property="id" jdbcType="BIGINT" />
+        <id column="id" property="id" jdbcType="VARCHAR" />
         <result column="role_name" property="roleName" jdbcType="VARCHAR" />
         <result column="role_sign" property="roleSign" jdbcType="VARCHAR" />
         <result column="description" property="description" jdbcType="VARCHAR" />
@@ -202,17 +202,23 @@
     </select>
     
     <select id="selectAllRole" resultMap="BaseResultMap" parameterType="map">
-    	SELECT * FROM role
+    	SELECT * FROM role ORDER BY id
     </select>
     
+    <!-- RolePermission表 -->
     <insert id="insertPermissionsByRoleId" parameterType="com.factoring.web.model.Role">
         insert into role_permission (id, role_id, permission_id) 
+        values 
         <foreach collection="list" item="item" index="index" separator=",">
-	        <trim prefix="values (" suffix=")" suffixOverrides=",">
-	            newUUID(),
-	            #{item.role_id},
-	            #{item.permission_id}
-	        </trim>
+			(newUUID(),#{item.roleId},#{item.permissionId})
         </foreach>
     </insert>
+    
+    <select id="selectAllRolePermission" resultType="java.util.Map" parameterType="map">
+    	SELECT * FROM role_permission ORDER BY role_id
+    </select>
+    
+    <delete id="deleteByRoleId" parameterType="java.lang.String">
+        delete from role_permission where role_id=#{id,jdbcType=VARCHAR}
+    </delete>
 </mapper>

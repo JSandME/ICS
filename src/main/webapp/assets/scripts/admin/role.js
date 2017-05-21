@@ -130,15 +130,14 @@ $(function() {
 					onEditableSave : function(field, row, oldValue, $el) {
 						var str = JSON.stringify(row.permissions);
 						if(typeof(str) !="undefined"){
-	                    	var result=str.substring(13,str.length-1).split(",");
+	                    	//var result=str.substring(13,str.length-1).split(",");
+	                    	var result=str.split(",");
 	                    	
 	                    	var newresult =[];
 	                    	for(var i=0;i<result.length;i++){
-	                    		alert(result[i].replace(/[^0-9a-zA-Z]/ig,""));
 	                    		newresult.push({id : result[i].replace(/[^0-9a-zA-Z]/ig,"")});
 	                    	}
 	                    	row.permissions=JSON.stringify(newresult);
-	                    	alert(JSON.stringify(row));	
 						}
 						//$("#reportTable").bootstrapTable("resetView");
 						$.ajax({

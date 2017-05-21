@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.druid.support.json.JSONUtils;
 import com.factoring.core.util.JsonUtil;
 import com.factoring.web.model.Role;
 import com.factoring.web.security.RoleSign;
@@ -65,6 +64,23 @@ public class AdminRoleController{
 	public String getRoles(HttpServletResponse response)
     {
 		List<Role> allRole = roleService.selectAllRole();
+		List allRolePermission = roleService.selectAllRolePermission();
+		int count = 0;
+		for (int i = 0; i < allRole.size(); i++) {
+			List permissions = new ArrayList();
+			Role role = allRole.get(i);
+			for (; count < allRolePermission.size();) {
+				Map map = (Map) allRolePermission.get(count);
+				if(map.get("role_id").equals(role.getId())){
+					permissions.add((String)map.get("permission_id"));
+					count ++ ;
+				}else{
+					break;
+				}
+			}
+			
+			role.setpermissions(permissions);
+		}
         return JsonUtil.dataListToJson(allRole);
     }
 	
@@ -82,7 +98,7 @@ public class AdminRoleController{
 	}
 	
 	/**
-	 * 更新role表
+	 * 更新role表 和权限表
 	 * @param role
 	 * @param result
 	 * @param model
@@ -99,11 +115,11 @@ public class AdminRoleController{
 				for (int i = 0; i < array.size(); i++) {
 					JSONObject object = array.getJSONObject(i);
 					Map<String, String> map = new HashMap<String, String>();
-					map.put("role_id", role.getId());
-					map.put("permission_id", (String)object.get("id"));
+					map.put("roleId", role.getId());
+					map.put("permissionId", (String)object.get("id"));
 					listData.add(map);
 				}
-				System.out.println(JsonUtil.dataListToJson(listData));
+				roleService.deleteByRoleId(role.getId());
 				roleService.insertPermissionsByRoleId(listData);
 			}
 			if (result.hasErrors()) {

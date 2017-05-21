@@ -59,4 +59,15 @@ public class RoleServiceImpl extends GenericServiceImpl<Role, String> implements
 	public int insertPermissionsByRoleId(List<Map> listdata) {
 		return roleMapper.insertPermissionsByRoleId(listdata);
 	}
+
+	@Override
+	public List<Map> selectAllRolePermission() {
+		return roleMapper.selectAllRolePermission();
+	}
+
+	@Override
+	public int deleteByRoleId(String id) {
+		return roleMapper.deleteByRoleId(id);
+	}
+
 }

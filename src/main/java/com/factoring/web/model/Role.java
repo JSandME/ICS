@@ -1,6 +1,8 @@
 package com.factoring.web.model;
 
+import java.util.List;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
 /**
  * 角色模型
@@ -19,7 +21,9 @@ public class Role {
 
     @NotNull
     private String description;
-
+    
+    private List permissions;
+    
     public String getId() {
         return id;
     }
@@ -52,7 +56,15 @@ public class Role {
         this.description = description == null ? null : description.trim();
     }
 
-    @Override
+	public List getpermissions() {
+		return permissions;
+	}
+
+	public void setpermissions(List permissions) {
+		this.permissions = permissions;
+	}
+
+	@Override
     public String toString() {
         return "Role [id=" + id + ", roleName=" + roleName + ", roleSign=" + roleSign + ", description=" + description + "]";
     }
