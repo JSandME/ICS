@@ -21,7 +21,9 @@ public class User {
 
     private String state;
 
-    private Date createTime;
+    private String createTime;
+    
+    private String role;
 
     public User() {
 
@@ -64,15 +66,23 @@ public class User {
         this.state = state == null ? null : state.trim();
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
-    @Override
+    public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	@Override
     public String toString() {
         return "User [id=" + id + ", username=" + username + ", password=" + password + ", state=" + state + ", createTime=" + createTime + "]";
     }

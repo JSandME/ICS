@@ -66,8 +66,8 @@ public class RoleServiceImpl extends GenericServiceImpl<Role, String> implements
 	}
 
 	@Override
-	public int deleteByRoleId(String id) {
-		return roleMapper.deleteByRoleId(id);
+	public int deletePermissionByRoleId(String id) {
+		return roleMapper.deletePermissionByRoleId(id);
 	}
 
 }

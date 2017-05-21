@@ -1,10 +1,10 @@
 $(function() {
-	var Role = function() {
+	var Permission = function() {
 
-		var handleRoleTable = function() {
+		var handlePermissionTable = function() {
 			
 			$(function() {
-				var url = "rest/admin/getDate";
+				var url = "rest/adminUser/getDate";
 				$("#reportTable").bootstrapTable({
 					url : url,
 					dataType:"JSON", 	//返回JSON格式数据
@@ -33,29 +33,64 @@ $(function() {
 					columns : [ {
 						checkbox : true
 					}, {
-						field : "roleName",
-						title : "角色名",
+						field : "username",
+						title : "用户账号",
 						editable : {
 							type : 'text',
-							title : '角色名',
+							title : '用户账号',
 							validate : function(v) {
 								if (!v)
-									return '角色名不能为空';
+									return '用户账号不能为空';
 							}
 						}
 					}, {
-						field : "roleSign",
-						title : "角色标识",
+						field : "password",
+						title : "登陆密码",
+						/*editable : {
+							type : 'text',
+							title : '登陆密码',
+							validate : function(v) {
+								if (!v)
+									return '登陆密码不能为空';
+							}
+						}*/
+					},{
+						field : "role",
+						title : "角色",
 						editable : {
 							type : 'select',
-							title : '角色标识',
+							title : '角色',
 							source : function(){
 								var result = [];
 								$.ajax({
 									type : "GET",
 									async: false,
 									cache : true,
-									url : "rest/admin/getRoleName",
+									url : "rest/adminRole/getDate",
+									data : {},
+									dateType : 'JSON',
+									success : function(data, status){
+										$.each(eval(data), function(index, element){
+											result.push({value : element.id, text : element.description});
+										});
+									}
+								});
+								return result;
+							}
+						}
+					}, {
+						field : "state",
+						title : "状态",
+						editable : {
+							type : 'select',
+							title : '状态',
+							source : ""/*function(){
+								var result = [];
+								$.ajax({
+									type : "GET",
+									async: false,
+									cache : true,
+									url : "rest/adminPermission/getPermissionName",
 									data : {},
 									dateType : 'JSON',
 									success : function(data, status){
@@ -65,21 +100,9 @@ $(function() {
 									}
 								});
 								return result;
-							}
+							}*/
 						}
-					}, {
-						field : "description",
-						title : "角色描述",
-						editable : {
-							type : 'text',
-							title : '角色描述',
-							validate : function(v) {
-								if (!v)
-									return '角色描述不能为空';
-							}
-						}
-					},
-					{
+					},{
 	                	title: '操作',
 	                	field: 'id',
 	                	align: 'center',
@@ -90,14 +113,22 @@ $(function() {
 	                    }
 					}],
 					onEditableSave : function(field, row, oldValue, $el) {
+						alert(JSON.stringify(row));
+						var str = JSON.stringify(row.password);
+						if(typeof(str) !="undefined"){
+	                    	row.permissions=JSON.stringify(sha256_digest(str.replace(/[^0-9a-zA-Z]/ig,"")));
+						}
+						alert(JSON.stringify(row));
+						$("#reportTable").bootstrapTable("resetView");
 						$.ajax({
 							type : "post",
-							url : "rest/admin/updateRole",
+							url : "rest/adminUser/updateUser",
 							data : row,
 							dataType : 'JSON',
 							success : function(data, status) {
 								if(status == "success"){
 									alert("更新成功。");
+									$('#reportTable').bootstrapTable('refresh');
 								}
 							},
 							error : function(data, status) {
@@ -115,10 +146,10 @@ $(function() {
 				$("#reportTable tr th").css("color", "#000000");//改变table表头字体颜色	
 				$("#reportTable tr th").css("font-family", "#Microsoft Yahei");//改变table表头字体样式		
 				//alert($("#fixed-table-toolbar").html());
-				$(".fixed-table-toolbar").append(
+				/*$(".fixed-table-toolbar").append(
 						'<div style="padding-top:10px">'+//
 			        	'<a href="javascript:void(0)" onclick="" class="btn btn-info col-sm-1">新增</a>'+
-		        	    '</div>');
+		        	    '</div>');*/
 				
 				//set进table之前进行数据处理
 				function responseHandler(res)
@@ -128,19 +159,23 @@ $(function() {
 					return res;
 				}
 				
-				$.ajax({
-					type : "GET",
-					async: true,
-					cache : true,
-					url : "rest/admin/getRoleName",
-					data : {},
-					dateType : 'JSON',
-					success : function(data, status){
-						$.each(eval(data), function(index, element){
-							$('#roleSign').append("<option value='" + element.key + "'>" + element.key + "</option>");
-						});
-					}
-				});
+				$('#reportTable').on('check.bs.table uncheck.bs.table ' +
+		                'check-all.bs.table uncheck-all.bs.table', function () {
+		            $('#remove').prop('disabled', !$('#reportTable').bootstrapTable('getSelections').length);
+
+		            // save your data, here just save the current page
+		            selections = getIdSelections();
+		            // push or splice the selections if you want to save all data selections
+		        });
+				
+				$('#remove').click(function () {
+		            var ids = getIdSelections();
+		            /*$('#reportTable').bootstrapTable('remove', {
+		                field: 'id',
+		                values: ids
+		            });*/
+		            $('#remove').prop('disabled', true);
+		        });
 				
 			});
 			
@@ -148,19 +183,19 @@ $(function() {
 
 		return {
 			init : function() {
-				handleRoleTable();
+				handlePermissionTable();
 			}
 
 		};
 	}();
-	Role.init();
+	Permission.init();
 	
 });
 
 function delRow(id){
 	$.ajax({
 		type : 'post',
-		url : "rest/admin/deleteRole",
+		url : "rest/adminUser/deleteUser",
 		async : false,
 		data : { id : id},
 		cache : false,
@@ -177,15 +212,15 @@ function delRow(id){
 function editRow(id){
 	$.ajax({
 		type : 'post',
-		url : "rest/admin/getRole",
+		url : "rest/adminUser/getUser",
 		async : true,
 		data : { id : id},
 		cache : false,
 		success : function(data ,status){
 			$('#id').val(data.id);
-			$('#roleName').val(data.roleName);
-			$('#roleSign').val(data.roleSign);
-			$('#description').val(data.description);
+			$('#username').val(data.username);
+			$('#password').val("******");
+			$('#state').val(data.state);
 		}
 	});
 	$('#light').css("display","block");
@@ -194,14 +229,14 @@ function editRow(id){
 
 function save(){
 	var id = $('#id').val();
-	var roleName = $('#roleName').val();
-	var roleSign = $('#roleSign').val();
-	var description = $('#description').val();
+	var username = $('#username').val();
+	var password = sha256_digest($('#password').val());
+	var state = $('#state').val();
 	$.ajax({
 		type : 'post',
-		url : "rest/admin/updateRole",
+		url : "rest/adminUser/updateUser",
 		async : true,
-		data : {id:id, roleName:roleName,roleSign:roleSign,description:description},
+		data : {id:id, username:username,password:password,state:state},
 		cache : false,
 		success : function(data ,status){
 			$('#light').css("display","none");
@@ -213,4 +248,19 @@ function save(){
 			alert("保存失败。");
 		},
 	});
+}
+
+function newUser(){
+	$('#id').val("");
+	$('#username').val("");
+	$('#password').val("");
+	$('#state').val("");
+	$('#light').css("display","block");
+	$('#fade').css("display","block");
+}
+
+function getIdSelections() {
+    return $.map($('#reportTable').bootstrapTable('getSelections'), function (row) {
+        return row.id
+    });
 }

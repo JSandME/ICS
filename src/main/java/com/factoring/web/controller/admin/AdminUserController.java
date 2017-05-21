@@ -25,8 +25,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.factoring.core.util.JsonUtil;
 import com.factoring.web.model.Role;
+import com.factoring.web.model.User;
 import com.factoring.web.security.RoleSign;
-import com.factoring.web.service.RoleService;
+import com.factoring.web.service.UserService;
 
 /**
  * admin控制器
@@ -34,24 +35,24 @@ import com.factoring.web.service.RoleService;
  *
  */
 @Controller
-@RequestMapping(value="/adminRole")
-public class AdminRoleController{
+@RequestMapping(value="/adminUser")
+public class AdminUserController{
 	
 	private final Log logger = LogFactory.getLog(AdminRoleController.class);
 	
 	@Resource
-	private RoleService roleService;
+	private UserService userService;
 
 	/**
 	 * admin角色role页面
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping("/role")
+	@RequestMapping("/user")
 	//@ResponseBody
 	@RequiresRoles(value= RoleSign.ADMIN)
     public String index(HttpServletRequest request,Model model) {
-        return "admin/role";
+        return "admin/user";
     }
 	
 	/**
@@ -61,72 +62,72 @@ public class AdminRoleController{
 	@RequestMapping(value = "/getDate", produces="application/json; charset=utf-8")
 	@ResponseBody
 	@RequiresRoles(value= RoleSign.ADMIN )
-	public String getRoles(HttpServletResponse response)
+	public String getUsers(HttpServletResponse response)
     {
-		List<Role> allRole = roleService.selectAllRole();
-		List allRolePermission = roleService.selectAllRolePermission();
+		List<User> allUser = userService.selectAllUser();
+		List allUserRole = userService.selectAllUserRole();
 		int count = 0;
-		for (int i = 0; i < allRole.size(); i++) {
-			List permissions = new ArrayList();
-			Role role = allRole.get(i);
-			for (; count < allRolePermission.size();) {
-				Map map = (Map) allRolePermission.get(count);
-				if(map.get("role_id").equals(role.getId())){
-					permissions.add((String)map.get("permission_id"));
+		for (int i = 0; i < allUser.size(); i++) {
+			String role = "";
+			User user = allUser.get(i);
+			for (; count < allUserRole.size();) {
+				Map map = (Map) allUserRole.get(count);
+				if(map.get("user_id").equals(user.getId())){
+					role = (String) map.get("role_id");
 					count ++ ;
 				}else{
 					break;
 				}
 			}
 			
-			role.setpermissions(permissions);
+			user.setRole(role);
 		}
-        return JsonUtil.dataListToJson(allRole);
+        return JsonUtil.dataListToJson(allUser);
     }
 	
 	/**
-	 * role页面获取类
+	 * user页面获取类
 	 * @return
 	 */
-	@RequestMapping("/getRole")
+	@RequestMapping("/getUser")
 	@ResponseBody
 	@RequiresRoles(value= RoleSign.ADMIN)
-	public Role getRolebyId(String id)
+	public User getUserbyId(String id)
 	{
-		Role role = roleService.selectByPrimaryKey(id);
-		return role;
+		User user = userService.selectByPrimaryKey(id);
+		return user;
 	}
 	
+	
 	/**
-	 * 更新role表 和权限表
+	 * 
 	 * @param role
 	 * @param result
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("/updateRole")
+	@RequestMapping("/updateUser")
 	@ResponseBody
 	@RequiresRoles(value= RoleSign.ADMIN)
-	public String updateRole(@Valid Role role, BindingResult result, Model model,String permissions){
+	public String updateUser(@Valid User user, BindingResult result, Model model){
 		try{
-			if(permissions != null && permissions.length() > 0){
-				JSONArray array = JSONArray.fromObject(permissions);
+			if(user.getRole() != null){ 
 				List<Map> listData = new ArrayList<Map>();
-				for (int i = 0; i < array.size(); i++) {
-					JSONObject object = array.getJSONObject(i);
-					Map<String, String> map = new HashMap<String, String>();
-					map.put("roleId", role.getId());
-					map.put("permissionId", (String)object.get("id"));
-					listData.add(map);
-				}
-				roleService.deletePermissionByRoleId(role.getId());
-				roleService.insertPermissionsByRoleId(listData);
+				Map<String, String> map = new HashMap<String, String>();
+				map.put("userId", user.getId());
+				map.put("roleId", user.getRole());
+				listData.add(map);
+				userService.deleteRoleByUserId(user.getId());
+				userService.insertRoleByUserId(listData);
 			}
 			if (result.hasErrors()) {
 	            return result.getFieldError().getDefaultMessage();
 	        }
-			int flag = roleService.updateByPrimaryKeySelective(role);
+			int flag = userService.updateByPrimaryKeySelective(user);
 			if(flag == 0){
+				if(userService.insertSelective(user) == 0){
+				return "";
+				}
 				return "error";
 			}
 		}catch (Exception e) {
@@ -137,29 +138,15 @@ public class AdminRoleController{
 	}
 	
 	/**
-	 * 获取所有Role
+	 * 
 	 * @return
 	 */
-	@RequestMapping(value="/getRoleName", method = RequestMethod.GET)
+	@RequestMapping("/deleteUser")
 	@ResponseBody
 	@RequiresRoles(value= RoleSign.ADMIN)
-	public String getRoleName(){
-		List listdata = RoleSign.getClassFields();
-		logger.info(JsonUtil.dataListToJson(listdata));
-		return JsonUtil.dataListToJson(listdata);
-	}
-	
-	/**
-	 * 获取所有Role
-	 * @return
-	 */
-	@RequestMapping("/deleteRole")
-	@ResponseBody
-	@RequiresRoles(value= RoleSign.ADMIN)
-	public String deleteRoleById(@Valid String id){
+	public String deleteUserById(@Valid String id){
 		try{
-			System.out.println("id：" + id);
-			int flag = roleService.deleteByPrimaryKey(id);
+			int flag = userService.deleteByPrimaryKey(id);
 			if(flag == 0){
 				return "error";
 			}
@@ -168,12 +155,5 @@ public class AdminRoleController{
 			return "error";
 		}
 		return "";
-	}
-	public static void main(String[] args) {
-		List list = new ArrayList();
-		list.add("1");
-		list.add("2");
-		list.add("3");
-		System.out.println(list.toString());
 	}
 }

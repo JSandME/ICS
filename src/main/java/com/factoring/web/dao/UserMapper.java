@@ -1,10 +1,12 @@
 package com.factoring.web.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
 import com.factoring.core.generic.GenericDao;
+import com.factoring.web.model.Role;
 import com.factoring.web.model.User;
 import com.factoring.web.model.UserExample;
 
@@ -36,7 +38,7 @@ public interface UserMapper extends GenericDao<User, String> {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
-
+    
     /**
      * 用户登录验证查询
      * 
@@ -53,4 +55,20 @@ public interface UserMapper extends GenericDao<User, String> {
      * @return
      */
     //List<User> selectByExampleAndPage(Page<User> page, UserExample example);
+    
+    /**
+     * 查询所有的user
+     * @return
+     */
+    List<User> selectAllUser();
+    
+    
+    //插入user_role表
+    int insertRoleByUserId(List<Map> listdata);
+    
+    //获取所有用户角色
+    List<Map> selectAllUserRole();
+    
+    //根据userid删除所属角色
+    int deleteRoleByUserId(String id);
 }

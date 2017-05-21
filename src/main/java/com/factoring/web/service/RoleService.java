@@ -55,5 +55,5 @@ public interface RoleService extends GenericService<Role, String> {
     List<Map> selectAllRolePermission();
     
   //根据roleid删除权限
-    int deleteByRoleId(String id);
+    int deletePermissionByRoleId(String id);
 }

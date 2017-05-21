@@ -103,14 +103,12 @@
         insert into user (id, username, password,
         state, create_time)
         values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=CHAR},
-        #{state,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+        #{state,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.factoring.web.model.User">
         insert into user
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
+            id,
             <if test="username != null">
                 username,
             </if>
@@ -125,9 +123,7 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=VARCHAR},
-            </if>
+                newUUID(),
             <if test="username != null">
                 #{username,jdbcType=VARCHAR},
             </if>
@@ -138,7 +134,7 @@
                 #{state,jdbcType=VARCHAR},
             </if>
             <if test="createTime != null">
-                #{createTime,jdbcType=TIMESTAMP},
+                #{createTime,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -164,7 +160,7 @@
                 state = #{record.state,jdbcType=VARCHAR},
             </if>
             <if test="record.createTime != null">
-                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+                create_time = #{record.createTime,jdbcType=VARCHAR},
             </if>
         </set>
         <if test="_parameter != null">
@@ -177,7 +173,7 @@
         username = #{record.username,jdbcType=VARCHAR},
         password = #{record.password,jdbcType=CHAR},
         state = #{record.state,jdbcType=VARCHAR},
-        create_time = #{record.createTime,jdbcType=TIMESTAMP}
+        create_time = #{record.createTime,jdbcType=VARCHAR}
         <if test="_parameter != null">
             <include refid="Update_By_Example_Where_Clause" />
         </if>
@@ -195,7 +191,7 @@
                 state = #{state,jdbcType=VARCHAR},
             </if>
             <if test="createTime != null">
-                create_time = #{createTime,jdbcType=TIMESTAMP},
+                create_time = #{createTime,jdbcType=VARCHAR},
             </if>
         </set>
         where id = #{id,jdbcType=VARCHAR}
@@ -206,7 +202,7 @@
         password = #{password,jdbcType=CHAR},
         state = #{state,jdbcType=VARCHAR},
         create_time =
-        #{createTime,jdbcType=TIMESTAMP}
+        #{createTime,jdbcType=VARCHAR}
         where id = #{id,jdbcType=VARCHAR}
     </update>
 
@@ -233,4 +229,28 @@
             order by ${orderByClause}
         </if>
     </select>
+    
+    <!-- 查询所有的user -->
+    <select id="selectAllUser" resultMap="BaseResultMap" parameterType="map">
+    	SELECT * FROM user ORDER BY id
+    </select>
+    
+    <!-- UserRole表 -->
+    <insert id="insertRoleByUserId" parameterType="com.factoring.web.model.User">
+        insert into user_role (id, user_id, role_id) 
+        values 
+        <foreach collection="list" item="item" index="index" separator=",">
+			(newUUID(),#{item.userId},#{item.roleId})
+        </foreach>
+    </insert>
+    
+    <!-- 获取所有用户角色 -->
+    <select id="selectAllUserRole" resultType="java.util.Map" parameterType="map">
+    	SELECT * FROM user_role ORDER BY user_id
+    </select>
+    
+    <!-- 根据userid删除所属角色 -->
+    <delete id="deleteRoleByUserId" parameterType="java.lang.String">
+        delete from user_role where user_id=#{id,jdbcType=VARCHAR}
+    </delete>
 </mapper>

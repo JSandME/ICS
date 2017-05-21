@@ -218,7 +218,7 @@
     	SELECT * FROM role_permission ORDER BY role_id
     </select>
     
-    <delete id="deleteByRoleId" parameterType="java.lang.String">
+    <delete id="deletePermissionByRoleId" parameterType="java.lang.String">
         delete from role_permission where role_id=#{id,jdbcType=VARCHAR}
     </delete>
 </mapper>

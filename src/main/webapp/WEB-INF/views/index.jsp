@@ -122,7 +122,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	                            </a>
 	                            <ul class="sub-menu">
 	                                <li>
-	                                    <a href="javascript:;">
+	                                    <a href="rest/adminUser/user">
 											用户管理
 	                                    </a>
 	                                </li>
@@ -310,10 +310,5 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
         <script type="text/javascript" src="app/js/index.js"></script>
 
         <!-- <script data-main="app/js/main" src="app/lib/requirejs/require.js"></script> -->
-        <script>
-        	function fun(){
-        		$("#index-page-title").attr("style","color:red").html("Hello jQuery");
-        	}
-        </script>
     </body>
 </html>

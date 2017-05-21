@@ -59,5 +59,5 @@ public interface RoleMapper extends GenericDao<Role, String> {
     List<Map> selectAllRolePermission();
     
     //根据roleid删除权限
-    int deleteByRoleId(String id);
+    int deletePermissionByRoleId(String id);
 }

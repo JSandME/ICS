@@ -1,6 +1,8 @@
 package com.factoring.web.service.impl;
 
 import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -60,5 +62,45 @@ public class UserServiceImpl extends GenericServiceImpl<User, String> implements
         final List<User> list = userMapper.selectByExample(example);
         return list.get(0);
     }
+
+	@Override
+	public List<User> selectAllUser() {
+		return userMapper.selectAllUser();
+	}
+
+	@Override
+	public int updateByPrimaryKeySelective(User record) {
+		return userMapper.updateByPrimaryKeySelective(record);
+	}
+
+	@Override
+	public int deleteByPrimaryKey(String id) {
+		return userMapper.deleteByPrimaryKey(id);
+	}
+
+	@Override
+	public User selectByPrimaryKey(String id) {
+		return userMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public int insertRoleByUserId(List<Map> listdata) {
+		return userMapper.insertRoleByUserId(listdata);
+	}
+
+	@Override
+	public List<Map> selectAllUserRole() {
+		return userMapper.selectAllUserRole();
+	}
+
+	@Override
+	public int deleteRoleByUserId(String id) {
+		return userMapper.deleteRoleByUserId(id);
+	}
+
+	@Override
+	public int insertSelective(User user) {
+		return userMapper.insertSelective(user);
+	}
 
 }
