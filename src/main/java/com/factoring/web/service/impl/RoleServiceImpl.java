@@ -1,6 +1,7 @@
 package com.factoring.web.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -19,18 +20,18 @@ import com.factoring.web.service.RoleService;
  *   
  */
 @Service
-public class RoleServiceImpl extends GenericServiceImpl<Role, Long> implements RoleService {
+public class RoleServiceImpl extends GenericServiceImpl<Role, String> implements RoleService {
 
     @Resource
     private RoleMapper roleMapper;
 
     @Override
-    public GenericDao<Role, Long> getDao() {
+    public GenericDao<Role, String> getDao() {
         return roleMapper;
     }
 
     @Override
-    public List<Role> selectRolesByUserId(Long userId) {
+    public List<Role> selectRolesByUserId(String userId) {
         return roleMapper.selectRolesByUserId(userId);
     }
 
@@ -45,13 +46,17 @@ public class RoleServiceImpl extends GenericServiceImpl<Role, Long> implements R
 	}
 
 	@Override
-	public int deleteByPrimaryKey(Long id) {
+	public int deleteByPrimaryKey(String id) {
 		return roleMapper.deleteByPrimaryKey(id);
 	}
 
 	@Override
-	public Role selectByPrimaryKey(Long id) {
+	public Role selectByPrimaryKey(String id) {
 		return roleMapper.selectByPrimaryKey(id);
 	}
 
+	@Override
+	public int insertPermissionsByRoleId(List<Map> listdata) {
+		return roleMapper.insertPermissionsByRoleId(listdata);
+	}
 }

@@ -1,6 +1,7 @@
 package com.factoring.web.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.factoring.core.generic.GenericService;
 import com.factoring.web.model.Role;
@@ -11,14 +12,14 @@ import com.factoring.web.model.Role;
  * @author 
  *   
  **/
-public interface RoleService extends GenericService<Role, Long> {
+public interface RoleService extends GenericService<Role, String> {
     /**
      * 通过用户id 查询用户 拥有的角色
      * 
      * @param userId
      * @return
      */
-    List<Role> selectRolesByUserId(Long userId);
+    List<Role> selectRolesByUserId(String userId);
     
     /**
      * 查询所有的Role
@@ -38,13 +39,15 @@ public interface RoleService extends GenericService<Role, Long> {
      * @param record
      * @return
      */
-    int deleteByPrimaryKey(Long id);
+    int deleteByPrimaryKey(String id);
     
     /**
      * 
      * @param record
      * @return
      */
-    Role selectByPrimaryKey(Long id);
+    Role selectByPrimaryKey(String id);
     
+    //插入role_permission表
+    int insertPermissionsByRoleId(List<Map> listdata);
 }

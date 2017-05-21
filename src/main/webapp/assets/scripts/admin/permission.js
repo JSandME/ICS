@@ -90,6 +90,7 @@ $(function() {
 	                    }
 					}],
 					onEditableSave : function(field, row, oldValue, $el) {
+						$("#reportTable").bootstrapTable("resetView");
 						$.ajax({
 							type : "post",
 							url : "rest/adminPermission/updatePermission",
@@ -98,6 +99,7 @@ $(function() {
 							success : function(data, status) {
 								if(status == "success"){
 									alert("更新成功。");
+									$('#reportTable').bootstrapTable('refresh');
 								}
 							},
 							error : function(data, status) {

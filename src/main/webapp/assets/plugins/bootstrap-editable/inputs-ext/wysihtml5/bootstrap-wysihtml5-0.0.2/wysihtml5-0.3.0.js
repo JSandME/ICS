@@ -3307,7 +3307,6 @@ Base.prototype = {
 				/\bbase\b/.test(value)) {
 				// get the underlying method
 				var method = value.valueOf();
-				// override
 				value = function() {
 					var previous = this.base || Base.prototype.base;
 					this.base = ancestor;

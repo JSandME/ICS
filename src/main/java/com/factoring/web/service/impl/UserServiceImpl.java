@@ -18,7 +18,7 @@ import com.factoring.web.service.UserService;
  *   上午11:54:24
  */
 @Service
-public class UserServiceImpl extends GenericServiceImpl<User, Long> implements UserService {
+public class UserServiceImpl extends GenericServiceImpl<User, String> implements UserService {
 
     @Resource
     private UserMapper userMapper;
@@ -34,7 +34,7 @@ public class UserServiceImpl extends GenericServiceImpl<User, Long> implements U
     }
 
     @Override
-    public int delete(Long id) {
+    public int delete(String id) {
         return userMapper.deleteByPrimaryKey(id);
     }
 
@@ -44,12 +44,12 @@ public class UserServiceImpl extends GenericServiceImpl<User, Long> implements U
     }
 
     @Override
-    public User selectById(Long id) {
+    public User selectById(String id) {
         return userMapper.selectByPrimaryKey(id);
     }
 
     @Override
-    public GenericDao<User, Long> getDao() {
+    public GenericDao<User, String> getDao() {
         return userMapper;
     }
 

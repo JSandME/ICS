@@ -1,11 +1,13 @@
 package com.factoring.web.dao;
 
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
+
 import com.factoring.core.generic.GenericDao;
 import com.factoring.web.model.Permission;
 import com.factoring.web.model.PermissionExample;
-import com.factoring.web.model.Role;
 
 /**
  * 权限 Dao 接口
@@ -13,12 +15,12 @@ import com.factoring.web.model.Role;
  * @author 
  *   上午11:59:03
  **/
-public interface PermissionMapper extends GenericDao<Permission, Long> {
+public interface PermissionMapper extends GenericDao<Permission, String> {
     int countByExample(PermissionExample example);
 
     int deleteByExample(PermissionExample example);
 
-    int deleteByPrimaryKey(Long id);
+    int deleteByPrimaryKey(String id);
 
     int insert(Permission record);
 
@@ -26,7 +28,7 @@ public interface PermissionMapper extends GenericDao<Permission, Long> {
 
     List<Permission> selectByExample(PermissionExample example);
 
-    Permission selectByPrimaryKey(Long id);
+    Permission selectByPrimaryKey(String id);
 
     int updateByExampleSelective(@Param("record") Permission record, @Param("example") PermissionExample example);
 
@@ -42,11 +44,12 @@ public interface PermissionMapper extends GenericDao<Permission, Long> {
      * @param roleId
      * @return
      */
-    List<Permission> selectPermissionsByRoleId(Long roleId);
+    List<Permission> selectPermissionsByRoleId(String roleId);
     
     /**
      * 查询所有的
      * @return
      */
     List<Permission> selectAllPermission();
+    
 }

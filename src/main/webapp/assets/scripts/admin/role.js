@@ -80,31 +80,18 @@ $(function() {
 						}
 					},
 					{
-	                	title: '操作',
-	                	field: 'id',
-	                	align: 'center',
-	                	formatter:function(value,row,index){  
-	                	var e = '<a href="#" mce_href="#" onclick="editRow(\''+ row.id + '\')">编辑</a> ';  
-	                	var d = '<a href="#" mce_href="#" onclick="delRow(\''+ row.id + '\');$(\'.rerefresh\').click()">删除</a> ';
-	                        return e+d;  
-	                    }
-					},
-					{
-		                field: "permission",
+		                field: "permissions",
 		                title: "权限",
 		                editable: {
 		                    type: 'select2',
 		                    title: '权限',
-		                    name: 'permission',
+		                    name: 'permissions',
 		                    placement: 'top',
 		                    success: function (response, newValue) {
-		                        debugger;
 		                    },
 		                    error: function(response, newValue) {
-		                        debugger;
 		                    },
 		                    url: function(params) {
-		                        debugger;
 		                    },
 		                    source: function(){
 								var result = [];
@@ -116,7 +103,6 @@ $(function() {
 									data : {},
 									dateType : 'JSON',
 									success : function(data, status){
-										alert(data);
 										$.each(eval(data), function(index, element){
 											result.push({id : element.id, text : element.permissionName});
 										});
@@ -130,8 +116,31 @@ $(function() {
 		                        multiple: true,
 		                    } 
 		                }
-		            }],
+		            },
+					{
+	                	title: '操作',
+	                	field: 'id',
+	                	align: 'center',
+	                	formatter:function(value,row,index){  
+	                	var e = '<a href="#" mce_href="#" onclick="editRow(\''+ row.id + '\')">编辑</a> ';  
+	                	var d = '<a href="#" mce_href="#" onclick="delRow(\''+ row.id + '\');$(\'.rerefresh\').click()">删除</a> ';
+	                        return e+d;  
+	                    }
+					}],
 					onEditableSave : function(field, row, oldValue, $el) {
+						var str = JSON.stringify(row.permissions);
+						if(typeof(str) !="undefined"){
+	                    	var result=str.substring(13,str.length-1).split(",");
+	                    	
+	                    	var newresult =[];
+	                    	for(var i=0;i<result.length;i++){
+	                    		alert(result[i].replace(/[^0-9a-zA-Z]/ig,""));
+	                    		newresult.push({id : result[i].replace(/[^0-9a-zA-Z]/ig,"")});
+	                    	}
+	                    	row.permissions=JSON.stringify(newresult);
+	                    	alert(JSON.stringify(row));	
+						}
+						//$("#reportTable").bootstrapTable("resetView");
 						$.ajax({
 							type : "post",
 							url : "rest/adminRole/updateRole",
@@ -140,10 +149,10 @@ $(function() {
 							success : function(data, status) {
 								if(status == "success"){
 									alert("更新成功。");
+									$('#reportTable').bootstrapTable('refresh');
 								}
 							},
 							error : function(data, status) {
-								alert(status);
 								alert("更新失败。");
 							},
 							complete : function() {
@@ -248,7 +257,11 @@ function save(){
 		success : function(data ,status){
 			$('#light').css("display","none");
 			$('#fade').css("display","none");
-			alert("保存成功。");
+			if(data=='error'){
+				alert('处理出错');
+			}else{
+				alert("保存成功。");
+			}
 			$('#reportTable').bootstrapTable('refresh');
 		},
 		error : function(data, status) {

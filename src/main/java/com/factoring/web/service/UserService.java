@@ -9,7 +9,7 @@ import com.factoring.web.model.User;
  * @author 
  *   上午11:53:33
  **/
-public interface UserService extends GenericService<User, Long> {
+public interface UserService extends GenericService<User, String> {
 
     /**
      * 用户验证

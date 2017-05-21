@@ -1,6 +1,7 @@
 package com.factoring.web.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.factoring.core.generic.GenericService;
 import com.factoring.web.model.Permission;
@@ -12,7 +13,7 @@ import com.factoring.web.model.Role;
  * @author 
  *   
  **/
-public interface PermissionService extends GenericService<Permission, Long> {
+public interface PermissionService extends GenericService<Permission, String> {
 
     /**
      * 通过角色id 查询角色 拥有的权限
@@ -20,7 +21,7 @@ public interface PermissionService extends GenericService<Permission, Long> {
      * @param roleId
      * @return
      */
-    List<Permission> selectPermissionsByRoleId(Long roleId);
+    List<Permission> selectPermissionsByRoleId(String roleId);
     
     /**
      * 查询所有的
@@ -40,13 +41,13 @@ public interface PermissionService extends GenericService<Permission, Long> {
      * @param record
      * @return
      */
-    int deleteByPrimaryKey(Long id);
+    int deleteByPrimaryKey(String id);
     
     /**
      * 
      * @param record
      * @return
      */
-    Permission selectByPrimaryKey(Long id);
+    Permission selectByPrimaryKey(String id);
 
 }

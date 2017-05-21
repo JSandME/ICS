@@ -83,15 +83,15 @@
             order by ${orderByClause}
         </if>
     </select>
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List" />
         from user
-        where id = #{id,jdbcType=BIGINT}
+        where id = #{id,jdbcType=VARCHAR}
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
         delete from user
-        where id = #{id,jdbcType=BIGINT}
+        where id = #{id,jdbcType=VARCHAR}
     </delete>
     <delete id="deleteByExample" parameterType="com.factoring.web.model.UserExample">
         delete from user
@@ -102,7 +102,7 @@
     <insert id="insert" parameterType="com.factoring.web.model.User">
         insert into user (id, username, password,
         state, create_time)
-        values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=CHAR},
+        values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=CHAR},
         #{state,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
     </insert>
     <insert id="insertSelective" parameterType="com.factoring.web.model.User">
@@ -126,7 +126,7 @@
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
-                #{id,jdbcType=BIGINT},
+                #{id,jdbcType=VARCHAR},
             </if>
             <if test="username != null">
                 #{username,jdbcType=VARCHAR},
@@ -152,7 +152,7 @@
         update user
         <set>
             <if test="record.id != null">
-                id = #{record.id,jdbcType=BIGINT},
+                id = #{record.id,jdbcType=VARCHAR},
             </if>
             <if test="record.username != null">
                 username = #{record.username,jdbcType=VARCHAR},
@@ -173,7 +173,7 @@
     </update>
     <update id="updateByExample" parameterType="map">
         update user
-        set id = #{record.id,jdbcType=BIGINT},
+        set id = #{record.id,jdbcType=VARCHAR},
         username = #{record.username,jdbcType=VARCHAR},
         password = #{record.password,jdbcType=CHAR},
         state = #{record.state,jdbcType=VARCHAR},
@@ -198,7 +198,7 @@
                 create_time = #{createTime,jdbcType=TIMESTAMP},
             </if>
         </set>
-        where id = #{id,jdbcType=BIGINT}
+        where id = #{id,jdbcType=VARCHAR}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.factoring.web.model.User">
         update user
@@ -207,7 +207,7 @@
         state = #{state,jdbcType=VARCHAR},
         create_time =
         #{createTime,jdbcType=TIMESTAMP}
-        where id = #{id,jdbcType=BIGINT}
+        where id = #{id,jdbcType=VARCHAR}
     </update>
 
     <!-- 用户登录验证查询 -->

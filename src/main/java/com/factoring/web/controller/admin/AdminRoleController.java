@@ -1,11 +1,17 @@
 package com.factoring.web.controller.admin;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -17,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.druid.stat.TableStat.Mode;
+import com.alibaba.druid.support.json.JSONUtils;
 import com.factoring.core.util.JsonUtil;
 import com.factoring.web.model.Role;
 import com.factoring.web.security.RoleSign;
@@ -53,10 +59,10 @@ public class AdminRoleController{
 	 * role页面获取类
 	 * @return
 	 */
-	@RequestMapping("/getDate")
+	@RequestMapping(value = "/getDate", produces="application/json; charset=utf-8")
 	@ResponseBody
-	@RequiresRoles(value= RoleSign.ADMIN)
-	public String getRoles()
+	@RequiresRoles(value= RoleSign.ADMIN )
+	public String getRoles(HttpServletResponse response)
     {
 		List<Role> allRole = roleService.selectAllRole();
         return JsonUtil.dataListToJson(allRole);
@@ -69,7 +75,7 @@ public class AdminRoleController{
 	@RequestMapping("/getRole")
 	@ResponseBody
 	@RequiresRoles(value= RoleSign.ADMIN)
-	public Role getRolebyId(Long id)
+	public Role getRolebyId(String id)
 	{
 		Role role = roleService.selectByPrimaryKey(id);
 		return role;
@@ -85,8 +91,21 @@ public class AdminRoleController{
 	@RequestMapping("/updateRole")
 	@ResponseBody
 	@RequiresRoles(value= RoleSign.ADMIN)
-	public String updateRole(@Valid Role role, BindingResult result, Model model){
+	public String updateRole(@Valid Role role, BindingResult result, Model model,String roleName,String permissions){
 		try{
+			if(permissions != null && permissions.length() > 0){
+				JSONArray array = JSONArray.fromObject(permissions);
+				List<Map> listData = new ArrayList<Map>();
+				for (int i = 0; i < array.size(); i++) {
+					JSONObject object = array.getJSONObject(i);
+					Map<String, String> map = new HashMap<String, String>();
+					map.put("role_id", role.getId());
+					map.put("permission_id", (String)object.get("id"));
+					listData.add(map);
+				}
+				System.out.println(JsonUtil.dataListToJson(listData));
+				roleService.insertPermissionsByRoleId(listData);
+			}
 			if (result.hasErrors()) {
 	            return result.getFieldError().getDefaultMessage();
 	        }
@@ -121,7 +140,7 @@ public class AdminRoleController{
 	@RequestMapping("/deleteRole")
 	@ResponseBody
 	@RequiresRoles(value= RoleSign.ADMIN)
-	public String deleteRoleById(@Valid Long id){
+	public String deleteRoleById(@Valid String id){
 		try{
 			System.out.println("id：" + id);
 			int flag = roleService.deleteByPrimaryKey(id);
@@ -134,5 +153,11 @@ public class AdminRoleController{
 		}
 		return "";
 	}
-
+	public static void main(String[] args) {
+		List list = new ArrayList();
+		list.add("1");
+		list.add("2");
+		list.add("3");
+		System.out.println(list.toString());
+	}
 }

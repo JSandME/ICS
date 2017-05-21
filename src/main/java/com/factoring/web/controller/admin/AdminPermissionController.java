@@ -43,7 +43,12 @@ public class AdminPermissionController{
         return "admin/permission";
     }
 	
-	@RequestMapping("/getDate")
+	/**
+	 * produces = "application/json; charset=utf-8"
+	 * 把@ResponseBody默认的 iso-8859-1改为utf-8
+	 * @return
+	 */
+	@RequestMapping(value = "/getDate", produces = "application/json; charset=utf-8")
 	@ResponseBody
 	@RequiresRoles(value= RoleSign.ADMIN)
 	public String getPermissions()
@@ -56,7 +61,7 @@ public class AdminPermissionController{
 	@RequestMapping("/getPermission")
 	@ResponseBody
 	@RequiresRoles(value= RoleSign.ADMIN)
-	public Permission getPermissionbyId(Long id)
+	public Permission getPermissionbyId(String id)
 	{
 		Permission permission = permissionService.selectByPrimaryKey(id);
 		return permission;
@@ -93,7 +98,7 @@ public class AdminPermissionController{
 	@RequestMapping("/deletePermission")
 	@ResponseBody
 	@RequiresRoles(value= RoleSign.ADMIN)
-	public String deletePermissionById(@Valid Long id){
+	public String deletePermissionById(@Valid String id){
 		try{
 			System.out.println("id：" + id);
 			int flag = permissionService.deleteByPrimaryKey(id);

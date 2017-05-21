@@ -82,15 +82,15 @@
             order by ${orderByClause}
         </if>
     </select>
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List" />
         from role
-        where id = #{id,jdbcType=BIGINT}
+        where id = #{id,jdbcType=VARCHAR}
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
         delete from role
-        where id = #{id,jdbcType=BIGINT}
+        where id = #{id,jdbcType=VARCHAR}
     </delete>
     <delete id="deleteByExample" parameterType="com.factoring.web.model.RoleExample">
         delete from role
@@ -101,7 +101,7 @@
     <insert id="insert" parameterType="com.factoring.web.model.Role">
         insert into role (id, role_name, role_sign,
         description)
-        values (#{id,jdbcType=BIGINT}, #{roleName,jdbcType=VARCHAR}, #{roleSign,jdbcType=VARCHAR},
+        values (#{id,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, #{roleSign,jdbcType=VARCHAR},
         #{description,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.factoring.web.model.Role">
@@ -122,7 +122,7 @@
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
-                #{id,jdbcType=BIGINT},
+                #{id,jdbcType=VARCHAR},
             </if>
             <if test="roleName != null">
                 #{roleName,jdbcType=VARCHAR},
@@ -145,7 +145,7 @@
         update role
         <set>
             <if test="record.id != null">
-                id = #{record.id,jdbcType=BIGINT},
+                id = #{record.id,jdbcType=VARCHAR},
             </if>
             <if test="record.roleName != null">
                 role_name = #{record.roleName,jdbcType=VARCHAR},
@@ -163,7 +163,7 @@
     </update>
     <update id="updateByExample" parameterType="map">
         update role
-        set id = #{record.id,jdbcType=BIGINT},
+        set id = #{record.id,jdbcType=VARCHAR},
         role_name = #{record.roleName,jdbcType=VARCHAR},
         role_sign = #{record.roleSign,jdbcType=VARCHAR},
         description =
@@ -185,23 +185,34 @@
                 description = #{description,jdbcType=VARCHAR},
             </if>
         </set>
-        where id = #{id,jdbcType=BIGINT}
+        where id = #{id,jdbcType=VARCHAR}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.factoring.web.model.Role">
         update role
         set role_name = #{roleName,jdbcType=VARCHAR},
         role_sign = #{roleSign,jdbcType=VARCHAR},
         description = #{description,jdbcType=VARCHAR}
-        where id = #{id,jdbcType=BIGINT}
+        where id = #{id,jdbcType=VARCHAR}
     </update>
 
     <!-- 通过用户id 查询用户 拥有的角色 -->
-    <select id="selectRolesByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    <select id="selectRolesByUserId" resultMap="BaseResultMap" parameterType="java.lang.String">
         SELECT r.* FROM role r LEFT JOIN user_role ur ON r.id = ur.role_id
-        WHERE ur.user_id = #{id,jdbcType=BIGINT}
+        WHERE ur.user_id = #{id,jdbcType=VARCHAR}
     </select>
     
     <select id="selectAllRole" resultMap="BaseResultMap" parameterType="map">
     	SELECT * FROM role
     </select>
+    
+    <insert id="insertPermissionsByRoleId" parameterType="com.factoring.web.model.Role">
+        insert into role_permission (id, role_id, permission_id) 
+        <foreach collection="list" item="item" index="index" separator=",">
+	        <trim prefix="values (" suffix=")" suffixOverrides=",">
+	            newUUID(),
+	            #{item.role_id},
+	            #{item.permission_id}
+	        </trim>
+        </foreach>
+    </insert>
 </mapper>

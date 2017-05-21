@@ -29,7 +29,7 @@
 <div class="row">
 	<div class="col-lg-12">
 	<div id="toolbar">
-        <button id="add" class="btn btn-primary">
+        <button id="add" class="btn btn-primary" onclick="fun()">
             <i class="glyphicon glyphicon-plus"></i> 新增
         </button>
         <button id="remove" class="btn btn-danger" disabled>
@@ -84,3 +84,20 @@
 	src="assets/plugins/bootstrap-table/extensions/export/bootstrap-table-export.min.js"
 	type="text/javascript"></script>
 <script src="assets/scripts/admin/permission.js" type="text/javascript"></script>
+<script>
+	function fun(){
+								var result = [];
+								$.ajax({
+									type : "GET",
+									async: false,
+									cache : true,
+									url : "rest/adminPermission/getDate",
+									data : {},
+									dateType : 'JSON',
+									success : function(data, status){
+										alert(data);
+									}
+								});
+								return result;
+							}
+</script>

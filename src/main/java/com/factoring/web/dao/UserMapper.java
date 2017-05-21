@@ -14,12 +14,12 @@ import com.factoring.web.model.UserExample;
  * @author 
  *   上午11:49:57
  **/
-public interface UserMapper extends GenericDao<User, Long> {
+public interface UserMapper extends GenericDao<User, String> {
     int countByExample(UserExample example);
 
     int deleteByExample(UserExample example);
 
-    int deleteByPrimaryKey(Long id);
+    int deleteByPrimaryKey(String id);
 
     int insert(User record);
 
@@ -27,7 +27,7 @@ public interface UserMapper extends GenericDao<User, Long> {
 
     List<User> selectByExample(UserExample example);
 
-    User selectByPrimaryKey(Long id);
+    User selectByPrimaryKey(String id);
 
     int updateByExampleSelective(@Param("record") User record, @Param("example") UserExample example);
 

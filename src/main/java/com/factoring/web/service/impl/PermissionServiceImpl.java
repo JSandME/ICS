@@ -1,6 +1,8 @@
 package com.factoring.web.service.impl;
 
 import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -18,19 +20,19 @@ import com.factoring.web.service.PermissionService;
  *   
  */
 @Service
-public class PermissionServiceImpl extends GenericServiceImpl<Permission, Long> implements PermissionService {
+public class PermissionServiceImpl extends GenericServiceImpl<Permission, String> implements PermissionService {
 
     @Resource
     private PermissionMapper permissionMapper;
 
 
     @Override
-    public GenericDao<Permission, Long> getDao() {
+    public GenericDao<Permission, String> getDao() {
         return permissionMapper;
     }
 
     @Override
-    public List<Permission> selectPermissionsByRoleId(Long roleId) {
+    public List<Permission> selectPermissionsByRoleId(String roleId) {
         return permissionMapper.selectPermissionsByRoleId(roleId);
     }
 
@@ -45,12 +47,13 @@ public class PermissionServiceImpl extends GenericServiceImpl<Permission, Long> 
 	}
 
 	@Override
-	public int deleteByPrimaryKey(Long id) {
+	public int deleteByPrimaryKey(String id) {
 		return permissionMapper.deleteByPrimaryKey(id);
 	}
 
 	@Override
-	public Permission selectByPrimaryKey(Long id) {
+	public Permission selectByPrimaryKey(String id) {
 		return permissionMapper.selectByPrimaryKey(id);
 	}
+
 }
