@@ -126,7 +126,7 @@ public class AdminUserController{
 			int flag = userService.updateByPrimaryKeySelective(user);
 			if(flag == 0){
 				if(userService.insertSelective(user) == 0){
-				return "";
+					return "";
 				}
 				return "error";
 			}
@@ -147,6 +147,7 @@ public class AdminUserController{
 	public String deleteUserById(@Valid String id){
 		try{
 			int flag = userService.deleteByPrimaryKey(id);
+			userService.deleteRoleByUserId(id);
 			if(flag == 0){
 				return "error";
 			}

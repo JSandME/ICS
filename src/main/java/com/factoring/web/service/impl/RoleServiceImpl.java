@@ -70,4 +70,9 @@ public class RoleServiceImpl extends GenericServiceImpl<Role, String> implements
 		return roleMapper.deletePermissionByRoleId(id);
 	}
 
+	@Override
+	public int insertSelective(Role role) {
+		return roleMapper.insertSelective(role);
+	}
+
 }

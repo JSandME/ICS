@@ -113,12 +113,10 @@ $(function() {
 	                    }
 					}],
 					onEditableSave : function(field, row, oldValue, $el) {
-						alert(JSON.stringify(row));
 						var str = JSON.stringify(row.password);
 						if(typeof(str) !="undefined"){
 	                    	row.permissions=JSON.stringify(sha256_digest(str.replace(/[^0-9a-zA-Z]/ig,"")));
 						}
-						alert(JSON.stringify(row));
 						$("#reportTable").bootstrapTable("resetView");
 						$.ajax({
 							type : "post",
@@ -232,6 +230,12 @@ function save(){
 	var username = $('#username').val();
 	var password = sha256_digest($('#password').val());
 	var state = $('#state').val();
+	
+	if(username == "" || password == ""){
+		alert("角色名和密码不能为空。");
+		return ;
+	}
+	
 	$.ajax({
 		type : 'post',
 		url : "rest/adminUser/updateUser",

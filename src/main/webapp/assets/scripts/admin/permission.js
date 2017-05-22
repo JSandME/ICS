@@ -203,8 +203,8 @@ function editRow(id){
 		cache : false,
 		success : function(data ,status){
 			$('#id').val(data.id);
-			$('#PermissionName').val(data.PermissionName);
-			$('#PermissionSign').val(data.PermissionSign);
+			$('#permissionName').val(data.permissionName);
+			$('#permissionSign').val(data.permissionSign);
 			$('#description').val(data.description);
 		}
 	});
@@ -214,14 +214,20 @@ function editRow(id){
 
 function save(){
 	var id = $('#id').val();
-	var PermissionName = $('#PermissionName').val();
-	var PermissionSign = $('#PermissionSign').val();
+	var permissionName = $('#permissionName').val();
+	var permissionSign = $('#permissionSign').val();
 	var description = $('#description').val();
+	
+	if(permissionName == "" || permissionSign == ""){
+		alert("权限名和权限标签不能为空。");
+		return ;
+	}
+	
 	$.ajax({
 		type : 'post',
 		url : "rest/adminPermission/updatePermission",
 		async : true,
-		data : {id:id, PermissionName:PermissionName,PermissionSign:PermissionSign,description:description},
+		data : {id:id, permissionName:permissionName,permissionSign:permissionSign,description:description},
 		cache : false,
 		success : function(data ,status){
 			$('#light').css("display","none");
@@ -233,6 +239,15 @@ function save(){
 			alert("保存失败。");
 		},
 	});
+}
+
+function newPermission(){
+	$('#id').val("");
+	$('#permissionName').val("");
+	$('#permissioSign').val("");
+	$('#description').val("");
+	$('#light').css("display","block");
+	$('#fade').css("display","block");
 }
 
 function getIdSelections() {

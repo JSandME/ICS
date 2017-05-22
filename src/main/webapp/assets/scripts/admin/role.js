@@ -165,10 +165,10 @@ $(function() {
 				$("#reportTable tr th").css("color", "#000000");//改变table表头字体颜色	
 				$("#reportTable tr th").css("font-family", "#Microsoft Yahei");//改变table表头字体样式		
 				//alert($("#fixed-table-toolbar").html());
-				$(".fixed-table-toolbar").append(
+				/*$(".fixed-table-toolbar").append(
 						'<div style="padding-top:10px">'+//
 			        	'<a href="javascript:void(0)" onclick="" class="btn btn-info col-sm-1">新增</a>'+
-		        	    '</div>');
+		        	    '</div>');*/
 				
 				//set进table之前进行数据处理
 				function responseHandler(res)
@@ -247,6 +247,12 @@ function save(){
 	var roleName = $('#roleName').val();
 	var roleSign = $('#roleSign').val();
 	var description = $('#description').val();
+	
+	if(roleName == "" || roleSign == ""){
+		alert("角色名和角色标签不能为空。");
+		return ;
+	}
+	
 	$.ajax({
 		type : 'post',
 		url : "rest/adminRole/updateRole",
@@ -267,4 +273,13 @@ function save(){
 			alert("保存失败。");
 		},
 	});
+}
+
+function newRole(){
+	$('#id').val("");
+	$('#roleName').val("");
+	$('#roleSign').val("");
+	$('#description').val("");
+	$('#light').css("display","block");
+	$('#fade').css("display","block");
 }

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.factoring.core.generic.GenericService;
 import com.factoring.web.model.Role;
+import com.factoring.web.model.User;
 
 /**
  * 角色 业务接口
@@ -13,6 +14,14 @@ import com.factoring.web.model.Role;
  *   
  **/
 public interface RoleService extends GenericService<Role, String> {
+	
+	/**
+     * 插入
+     * @param record
+     * @return
+     */
+    int insertSelective(Role role);
+	
     /**
      * 通过用户id 查询用户 拥有的角色
      * 

@@ -6,6 +6,7 @@ import java.util.Map;
 import com.factoring.core.generic.GenericService;
 import com.factoring.web.model.Permission;
 import com.factoring.web.model.Role;
+import com.factoring.web.model.User;
 
 /**
  * 权限 业务接口
@@ -14,6 +15,13 @@ import com.factoring.web.model.Role;
  *   
  **/
 public interface PermissionService extends GenericService<Permission, String> {
+	
+	/**
+     * 插入
+     * @param record
+     * @return
+     */
+    int insertSelective(Permission permission);
 
     /**
      * 通过角色id 查询角色 拥有的权限

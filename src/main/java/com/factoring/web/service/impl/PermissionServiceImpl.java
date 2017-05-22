@@ -56,4 +56,9 @@ public class PermissionServiceImpl extends GenericServiceImpl<Permission, String
 		return permissionMapper.selectByPrimaryKey(id);
 	}
 
+	@Override
+	public int insertSelective(Permission permission) {
+		return permissionMapper.insertSelective(permission);
+	}
+
 }

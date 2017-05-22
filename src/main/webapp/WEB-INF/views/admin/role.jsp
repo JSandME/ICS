@@ -30,6 +30,11 @@
 <!-- END PAGE HEADER-->
 <!-- BEGIN BODY-->
 <div class="row">
+	<div id="toolbar">
+        <button id="add" class="btn btn-primary" onclick="newRole()">
+            <i class="glyphicon glyphicon-plus"></i> 新增
+        </button>
+    </div>
 	<div class="col-lg-12">
 		<table id="reportTable" class="table-striped">
 		</table>

@@ -29,7 +29,7 @@
 <div class="row">
 	<div class="col-lg-12">
 	<div id="toolbar">
-        <button id="add" class="btn btn-primary" onclick="fun()">
+        <button id="add" class="btn btn-primary" onclick="newPermission()">
             <i class="glyphicon glyphicon-plus"></i> 新增
         </button>
         <button id="remove" class="btn btn-danger" disabled>

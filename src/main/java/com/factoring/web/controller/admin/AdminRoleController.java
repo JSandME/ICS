@@ -127,7 +127,9 @@ public class AdminRoleController{
 	        }
 			int flag = roleService.updateByPrimaryKeySelective(role);
 			if(flag == 0){
-				return "error";
+				if(roleService.insertSelective(role) == 0){
+					return "";
+				}
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -158,8 +160,8 @@ public class AdminRoleController{
 	@RequiresRoles(value= RoleSign.ADMIN)
 	public String deleteRoleById(@Valid String id){
 		try{
-			System.out.println("id：" + id);
 			int flag = roleService.deleteByPrimaryKey(id);
+			roleService.deletePermissionByRoleId(id);
 			if(flag == 0){
 				return "error";
 			}
@@ -168,12 +170,5 @@ public class AdminRoleController{
 			return "error";
 		}
 		return "";
-	}
-	public static void main(String[] args) {
-		List list = new ArrayList();
-		list.add("1");
-		list.add("2");
-		list.add("3");
-		System.out.println(list.toString());
 	}
 }
