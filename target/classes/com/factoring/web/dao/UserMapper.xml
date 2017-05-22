@@ -3,6 +3,7 @@
 <mapper namespace="com.factoring.web.dao.UserMapper">
     <resultMap id="BaseResultMap" type="com.factoring.web.model.User">
         <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
         <result column="username" property="username" jdbcType="VARCHAR" />
         <result column="password" property="password" jdbcType="CHAR" />
         <result column="state" property="state" jdbcType="VARCHAR" />
@@ -67,7 +68,7 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-        id, username, password, state, create_time
+        id, name, username, password, state, create_time
     </sql>
     <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.factoring.web.model.UserExample">
         select
@@ -100,15 +101,18 @@
         </if>
     </delete>
     <insert id="insert" parameterType="com.factoring.web.model.User">
-        insert into user (id, username, password,
+        insert into user (id, username, name, password,
         state, create_time)
-        values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=CHAR},
+        values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=CHAR},
         #{state,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.factoring.web.model.User">
         insert into user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             id,
+            <if test="name != null">
+                name,
+            </if>
             <if test="username != null">
                 username,
             </if>
@@ -124,6 +128,9 @@
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
                 newUUID(),
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
             <if test="username != null">
                 #{username,jdbcType=VARCHAR},
             </if>
@@ -150,6 +157,9 @@
             <if test="record.id != null">
                 id = #{record.id,jdbcType=VARCHAR},
             </if>
+            <if test="record.name != null">
+                name = #{record.name,jdbcType=VARCHAR},
+            </if>
             <if test="record.username != null">
                 username = #{record.username,jdbcType=VARCHAR},
             </if>
@@ -171,6 +181,7 @@
         update user
         set id = #{record.id,jdbcType=VARCHAR},
         username = #{record.username,jdbcType=VARCHAR},
+        name = #{record.name,jdbcType=VARCHAR},
         password = #{record.password,jdbcType=CHAR},
         state = #{record.state,jdbcType=VARCHAR},
         create_time = #{record.createTime,jdbcType=VARCHAR}
@@ -181,6 +192,9 @@
     <update id="updateByPrimaryKeySelective" parameterType="com.factoring.web.model.User">
         update user
         <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
             <if test="username != null">
                 username = #{username,jdbcType=VARCHAR},
             </if>
@@ -199,6 +213,7 @@
     <update id="updateByPrimaryKey" parameterType="com.factoring.web.model.User">
         update user
         set username = #{username,jdbcType=VARCHAR},
+        name = #{name,jdbcType=VARCHAR},
         password = #{password,jdbcType=CHAR},
         state = #{state,jdbcType=VARCHAR},
         create_time =

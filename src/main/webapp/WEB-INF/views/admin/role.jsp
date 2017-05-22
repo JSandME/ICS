@@ -51,13 +51,13 @@
 						</tr>
 						<tr>
 							<td class="tb">角色名 :</td>
-							<td class="text"><input id="roleName" type="text" name="roleName" placeholder="roleName" /></td>
+							<td class="text"><input id="roleName" type="text" name="roleName" placeholder="" /></td>
 							<td class="tb">角色标识 :</td>
 							<td class="text"><select id="roleSign"></select></td>
 						</tr>
 						<tr>
 							<td class="tb">角色描述 :</td>
-							<td class="text"><input id="description" type="text" name="description" placeholder="description"></input></td>
+							<td class="text"><input id="description" type="text" name="description" placeholder=""></input></td>
 						</tr>
 					</table>
 					<div class="ft">

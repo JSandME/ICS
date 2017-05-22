@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.factoring.core.util.JsonUtil;
 import com.factoring.web.model.User;
 import com.factoring.web.security.PermissionSign;
 import com.factoring.web.security.RoleSign;
@@ -67,6 +68,7 @@ public class UserController {
             request.getSession().setAttribute("userInfo", authUserInfo);
         } catch (AuthenticationException e) {
             // 身份验证失败
+        	e.printStackTrace();
             model.addAttribute("error", "用户名或密码错误!");
             return "login";
         }

@@ -13,6 +13,8 @@ import javax.validation.constraints.NotNull;
 public class User {
     private String id;
 
+    private String name;
+    
     @NotNull
     private String username;
 
@@ -42,7 +44,15 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
+    public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getUsername() {
         return username;
     }
 

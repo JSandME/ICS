@@ -51,13 +51,13 @@
 						</tr>
 						<tr>
 							<td class="tb">权限名 :</td>
-							<td class="text"><input id="permissionName" type="text" name="permissionName" placeholder="permissionName" /></td>
+							<td class="text"><input id="permissionName" type="text" name="permissionName" placeholder="" /></td>
 							<td class="tb">权限标识 :</td>
 							<td class="text"><select id="permissioSign"></select></td>
 						</tr>
 						<tr>
 							<td class="tb">权限描述 :</td>
-							<td class="text"><input id="description" type="text" name="description" placeholder="description"></input></td>
+							<td class="text"><input id="description" type="text" name="description" placeholder=""></input></td>
 						</tr>
 					</table>
 					<div class="ft">

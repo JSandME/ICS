@@ -51,11 +51,13 @@
 						</tr>
 						<tr>
 							<td class="tb">用户账号 :</td>
-							<td class="text"><input id="username" type="text" name="username" placeholder="username" /></td>
+							<td class="text"><input id="username" type="text" name="username" placeholder="" /></td>
 							<td class="tb">登陆密码 :</td>
-							<td class="text"><input id="password" type="text" name="password" placeholder="password"></input></td>
+							<td class="text"><input id="password" type="text" name="password" placeholder=""></input></td>
 						</tr>
 						<tr>
+							<td class="tb">用户名称 :</td>
+							<td class="text"><input id="name" type="text" name="name" placeholder="" /></td>
 							<td class="tb">状态 :</td>
 							<td class="text"><select id="state"></select></td>
 						</tr>
@@ -83,6 +85,8 @@
 <script
 	src="assets/plugins/bootstrap-table/extensions/export/bootstrap-table-export.min.js"
 	type="text/javascript"></script>
+<script src="assets/plugins/tableExport.js" type="text/javascript"></script>
+<script src="assets/plugins/jquery.base64.js" type="text/javascript"></script>
 <script src="assets/plugins/select2/select2.min.js" type="text/javascript"></script>
 <script src="assets/scripts/admin/user.js" type="text/javascript"></script>
 

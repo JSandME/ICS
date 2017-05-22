@@ -22,7 +22,7 @@ $(function() {
 					search : true,
 					singleSelect : true,
 					clickToSelect : true,
-					showExport: false,                     //是否显示导出
+					showExport: true,                     //是否显示导出
 					exportDataType: "all",              //basic', 'all', 'selected'.
 					minimumCountColumns: 2,    //最少允许的列数
 					responseHandler: responseHandler,
@@ -33,16 +33,19 @@ $(function() {
 					columns : [ {
 						checkbox : true
 					}, {
-						field : "username",
-						title : "用户账号",
+						field : "name",
+						title : "用户名称",
 						editable : {
 							type : 'text',
-							title : '用户账号',
+							title : '用户名称',
 							validate : function(v) {
 								if (!v)
 									return '用户账号不能为空';
 							}
 						}
+					},{
+						field : "username",
+						title : "用户账号",
 					}, {
 						field : "password",
 						title : "登陆密码",
@@ -216,6 +219,7 @@ function editRow(id){
 		cache : false,
 		success : function(data ,status){
 			$('#id').val(data.id);
+			$('#name').val(data.name);
 			$('#username').val(data.username);
 			$('#password').val("******");
 			$('#state').val(data.state);
@@ -227,9 +231,20 @@ function editRow(id){
 
 function save(){
 	var id = $('#id').val();
+	var name = $('#name').val();
 	var username = $('#username').val();
-	var password = sha256_digest($('#password').val());
+	var password = $('#password').val();
 	var state = $('#state').val();
+	
+	var datasource ={};
+	datasource.name = name;
+	datasource.username = username;
+	datasource.state = state;
+	if(password != "******"){
+		password = sha256_digest($('#password').val());
+		datasource.password = password;
+	}
+	
 	
 	if(username == "" || password == ""){
 		alert("角色名和密码不能为空。");
@@ -240,13 +255,17 @@ function save(){
 		type : 'post',
 		url : "rest/adminUser/updateUser",
 		async : true,
-		data : {id:id, username:username,password:password,state:state},
+		data : datasource,
 		cache : false,
 		success : function(data ,status){
-			$('#light').css("display","none");
-			$('#fade').css("display","none");
-			alert("保存成功。");
-			$('#reportTable').bootstrapTable('refresh');
+			if(data != "error"){
+				$('#light').css("display","none");
+				$('#fade').css("display","none");
+				alert("保存成功。");
+				$('#reportTable').bootstrapTable('refresh');
+			}else{
+				alert("保存失败，可能已存在改登录名。");
+			}
 		},
 		error : function(data, status) {
 			alert("保存失败。");
@@ -256,6 +275,7 @@ function save(){
 
 function newUser(){
 	$('#id').val("");
+	$('#name').val("");
 	$('#username').val("");
 	$('#password').val("");
 	$('#state').val("");
