@@ -112,33 +112,23 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                                 <i class="fa fa-home"></i><span class="title"> 首页 </span><span class="selected"> </span>
                             </a>
                         </li>
-						<!-- 测试权限控制 -->
-                                <shiro:hasAnyRoles name="admin">
-                                
-	                        <li class="">
+						
+                        
+                        <shiro:hasAnyRoles name="admin,factor">
+                        <li class="">
 	                            <a href="javascript:;">
-	                                <i class="fa fa-gears"></i><span class="title"> 系统管理 </span>
+	                                <i class="fa fa-list-alt"></i><span class="title"> 功能 </span>
 	                                <span class="arrow "> </span>
 	                            </a>
 	                            <ul class="sub-menu">
 	                                <li>
-	                                    <a href="rest/adminUser/user">
-											用户管理
-	                                    </a>
-	                                </li>
-	                                <li>
-	                                    <a href="rest/adminRole/role">
-	                                    	角色管理
-	                                    </a>
-	                                </li>
-	                                <li>
-	                                    <a href="rest/adminPermission/permission">
-	                                    	权限管理
+	                                    <a href="rest/product/page">
+											金融产品管理
 	                                    </a>
 	                                </li>
 	                            </ul>
-	                        </li>
-                        </shiro:hasAnyRoles>
+	                    </li>
+	                    </shiro:hasAnyRoles>
 
                         <li class="">
                             <a href="javascript:;">
@@ -183,7 +173,34 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
      
                             </ul>
                         </li>
-
+						
+						<shiro:hasAnyRoles name="admin">
+                                
+	                        <li class="">
+	                            <a href="javascript:;">
+	                                <i class="fa fa-gears"></i><span class="title"> 系统管理 </span>
+	                                <span class="arrow "> </span>
+	                            </a>
+	                            <ul class="sub-menu">
+	                                <li>
+	                                    <a href="rest/adminUser/user">
+											用户管理
+	                                    </a>
+	                                </li>
+	                                <li>
+	                                    <a href="rest/adminRole/role">
+	                                    	角色管理
+	                                    </a>
+	                                </li>
+	                                <li>
+	                                    <a href="rest/adminPermission/permission">
+	                                    	权限管理
+	                                    </a>
+	                                </li>
+	                            </ul>
+	                        </li>
+                        </shiro:hasAnyRoles>
+						
                     </ul>
                     <!-- END SIDEBAR MENU -->
                 </div>
