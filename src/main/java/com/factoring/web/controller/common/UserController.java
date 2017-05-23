@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import redis.clients.jedis.Jedis;
+
+import com.factoring.core.feature.cache.redis.RedisCache;
 import com.factoring.core.util.JsonUtil;
 import com.factoring.web.model.User;
 import com.factoring.web.security.PermissionSign;
@@ -66,6 +69,9 @@ public class UserController {
             // 验证成功在Session中保存用户信息
             final User authUserInfo = userService.selectByUsername(user.getUsername());
             request.getSession().setAttribute("userInfo", authUserInfo);
+            System.out.println("request.getSession().getId()==>" + request.getSession().getId());
+            System.out.println("ubject.getSession().getId()==>" + subject.getSession().getId());
+            //RedisCache.cache(request.getSession().toString(), authUserInfo.getUsername(), 1800);
         } catch (AuthenticationException e) {
             // 身份验证失败
         	e.printStackTrace();

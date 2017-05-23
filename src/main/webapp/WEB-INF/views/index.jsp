@@ -148,12 +148,17 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                             <ul class="sub-menu">
                                 <li>
                                     <a href="javascript:;">
-                                        信息修改
+                                       	 信息修改
                                     </a>
                                 </li>
                                 <li>
                                     <a href="javascript:;">
-                                        密码修改
+                                       	 密码修改
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;">
+                                       	 金融产品管理
                                     </a>
                                 </li>
                                 

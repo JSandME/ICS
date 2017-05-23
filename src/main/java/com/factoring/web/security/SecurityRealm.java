@@ -46,7 +46,7 @@ public class SecurityRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         String username = String.valueOf(principals.getPrimaryPrincipal());
-
+        
         final User user = userService.selectByUsername(username);
         final List<Role> roleInfos = roleService.selectRolesByUserId(user.getId());
         for (Role role : roleInfos) {
@@ -71,7 +71,6 @@ public class SecurityRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         String username = String.valueOf(token.getPrincipal());
         String password = new String((char[]) token.getCredentials());
-        System.out.println("password:===>" + password);
         // 通过数据库进行验证
         final User authentication = userService.authentication(new User(username, password));
         if (authentication == null) {

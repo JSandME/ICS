@@ -107,9 +107,7 @@
     <insert id="insertSelective" parameterType="com.factoring.web.model.Role">
         insert into role
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
                 id,
-            </if>
             <if test="roleName != null">
                 role_name,
             </if>
@@ -121,9 +119,7 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=VARCHAR},
-            </if>
+            newUUID(),
             <if test="roleName != null">
                 #{roleName,jdbcType=VARCHAR},
             </if>
