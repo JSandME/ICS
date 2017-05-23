@@ -20,7 +20,7 @@ import com.factoring.core.util.JsonUtil;
 import com.factoring.web.model.Permission;
 import com.factoring.web.security.PermissionSign;
 import com.factoring.web.security.RoleSign;
-import com.factoring.web.service.PermissionService;
+import com.factoring.web.service.common.PermissionService;
 
 /**
  * admin控制器

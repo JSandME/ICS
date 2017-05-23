@@ -1,4 +1,4 @@
-package com.factoring.web.service;
+package com.factoring.web.service.common;
 
 import java.util.List;
 import java.util.Map;

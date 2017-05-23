@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -13,15 +12,14 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Component;
 
 import com.factoring.web.model.Permission;
 import com.factoring.web.model.Role;
 import com.factoring.web.model.User;
-import com.factoring.web.service.PermissionService;
-import com.factoring.web.service.RoleService;
-import com.factoring.web.service.UserService;
+import com.factoring.web.service.common.PermissionService;
+import com.factoring.web.service.common.RoleService;
+import com.factoring.web.service.common.UserService;
 
 /**
  * 用户身份验证,授权 Realm 组件

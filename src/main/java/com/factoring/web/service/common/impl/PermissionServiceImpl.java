@@ -1,17 +1,16 @@
-package com.factoring.web.service.impl;
+package com.factoring.web.service.common.impl;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+
 import com.factoring.core.generic.GenericDao;
 import com.factoring.core.generic.GenericServiceImpl;
 import com.factoring.web.dao.PermissionMapper;
 import com.factoring.web.model.Permission;
-import com.factoring.web.model.Role;
-import com.factoring.web.service.PermissionService;
+import com.factoring.web.service.common.PermissionService;
 
 /**
  * 权限Service实现类
