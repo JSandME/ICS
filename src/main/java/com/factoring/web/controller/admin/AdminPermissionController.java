@@ -54,7 +54,6 @@ public class AdminPermissionController{
 	public String getPermissions()
     {
 		List<Permission> allPermission = permissionService.selectAllPermission();
-		logger.info(JsonUtil.dataListToJson(allPermission));
         return JsonUtil.dataListToJson(allPermission);
     }
 	
@@ -93,7 +92,6 @@ public class AdminPermissionController{
 	@RequiresRoles(value= RoleSign.ADMIN)
 	public String getPermissionName(){
 		List listdata = PermissionSign.getClassFields();
-		logger.info(JsonUtil.dataListToJson(listdata));
 		return JsonUtil.dataListToJson(listdata);
 	}
 	

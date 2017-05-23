@@ -147,7 +147,6 @@ public class AdminRoleController{
 	@RequiresRoles(value= RoleSign.ADMIN)
 	public String getRoleName(){
 		List listdata = RoleSign.getClassFields();
-		logger.info(JsonUtil.dataListToJson(listdata));
 		return JsonUtil.dataListToJson(listdata);
 	}
 	
@@ -170,5 +169,9 @@ public class AdminRoleController{
 			return "error";
 		}
 		return "";
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(Math.pow(10, 2));
 	}
 }

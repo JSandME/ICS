@@ -11,17 +11,17 @@ import redis.clients.jedis.Jedis;
  */
 @Component(value = "redisCache")
 public class RedisCache {
-    private int port = 6379;
-    private String host = "127.0.0.1";
-    private Jedis jedis = new Jedis(host, port);
+    private static int port = 6379;
+    private static String host = "120.25.97.145";
+    private static Jedis jedis = new Jedis(host, port);
 
-    public String cache(String key, String value, int seconds) {
+    public static String cache(String key, String value, int seconds) {
         String result = jedis.set(key, value);
         jedis.expire(key, seconds);
         return result;
     }
 
-    public String get(String key) {
+    public static String get(String key) {
         return jedis.get(key);
     }
 }
