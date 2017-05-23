@@ -1,4 +1,4 @@
-package com.factoring.web.service.impl;
+package com.factoring.web.service.common.impl;
 
 import java.util.List;
 import java.util.Map;
@@ -11,7 +11,7 @@ import com.factoring.core.generic.GenericDao;
 import com.factoring.core.generic.GenericServiceImpl;
 import com.factoring.web.dao.RoleMapper;
 import com.factoring.web.model.Role;
-import com.factoring.web.service.RoleService;
+import com.factoring.web.service.common.RoleService;
 
 /**
  * 角色Service实现类

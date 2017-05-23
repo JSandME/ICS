@@ -1,4 +1,4 @@
-package com.factoring.web.service.impl;
+package com.factoring.web.service.common.impl;
 
 import java.util.List;
 import java.util.Map;
@@ -6,12 +6,13 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+
 import com.factoring.core.generic.GenericDao;
 import com.factoring.core.generic.GenericServiceImpl;
 import com.factoring.web.dao.UserMapper;
 import com.factoring.web.model.User;
 import com.factoring.web.model.UserExample;
-import com.factoring.web.service.UserService;
+import com.factoring.web.service.common.UserService;
 
 /**
  * 用户Service实现类

@@ -16,19 +16,14 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import redis.clients.jedis.Jedis;
-
-import com.factoring.core.feature.cache.redis.RedisCache;
-import com.factoring.core.util.JsonUtil;
 import com.factoring.web.model.User;
 import com.factoring.web.security.PermissionSign;
 import com.factoring.web.security.RoleSign;
-import com.factoring.web.service.UserService;
+import com.factoring.web.service.common.UserService;
 
 /**
  * 用户控制器
