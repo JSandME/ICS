@@ -127,9 +127,10 @@ public class AdminRoleController{
 	        }
 			int flag = roleService.updateByPrimaryKeySelective(role);
 			if(flag == 0){
-				if(roleService.insertSelective(role) == 0){
+				if(roleService.insertSelective(role) != 0){
 					return "";
 				}
+				return "error";
 			}
 		}catch (Exception e) {
 			e.printStackTrace();

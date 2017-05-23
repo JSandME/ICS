@@ -125,7 +125,7 @@ public class AdminUserController{
 	        }
 			int flag = userService.updateByPrimaryKeySelective(user);
 			if(flag == 0){
-				if(userService.insertSelective(user) == 0){
+				if(userService.insertSelective(user) != 0){
 					return "";
 				}
 				return "error";

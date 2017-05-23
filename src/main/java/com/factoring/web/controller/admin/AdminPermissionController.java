@@ -76,9 +76,10 @@ public class AdminPermissionController{
 	        }
 			int flag = permissionService.updateByPrimaryKeySelective(permission);
 			if(flag == 0){
-				if(permissionService.insertSelective(permission) == 0){
+				if(permissionService.insertSelective(permission) != 0){
 					return "";
 				}
+				return "error";
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
