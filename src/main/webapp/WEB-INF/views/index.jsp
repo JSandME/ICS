@@ -126,6 +126,11 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 											金融产品管理
 	                                    </a>
 	                                </li>
+	                                <li>
+	                                    <a href="rest/product/page">
+											申请融资
+	                                    </a>
+	                                </li>
 	                            </ul>
 	                    </li>
 	                    </shiro:hasAnyRoles>
