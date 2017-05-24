@@ -51,7 +51,7 @@ public class ProductController {
 
 	@RequestMapping(value = "/getDate", produces="application/json; charset=utf-8")
 	@ResponseBody
-	@RequiresRoles(value= {RoleSign.FACTOR})
+	@RequiresRoles(value= RoleSign.FACTOR)
 	public String getProducts(HttpServletResponse response)
     {
 		Subject subject = SecurityUtils.getSubject();

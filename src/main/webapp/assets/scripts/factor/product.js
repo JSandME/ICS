@@ -187,7 +187,6 @@ function editRow(id){
 		data : { id : id},
 		cache : false,
 		success : function(data ,status){
-			alert(JSON.stringify(data));
 			$('#id').val(data.id);
 			$('#productName').val(data.productName);
 			$('#minAmt').val(data.minAmt);
