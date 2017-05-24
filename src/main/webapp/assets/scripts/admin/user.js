@@ -236,6 +236,14 @@ function save(){
 	var password = $('#password').val();
 	var state = $('#state').val();
 	
+	if(username == "" || password == ""){
+		alert("角色名和密码不能为空。");
+		return ;
+	}else if(username.length < 6 || password .length < 6){
+		alert("角色名和密码长度必须大于等于6位。");
+		return ;
+	}
+	
 	var datasource ={};
 	datasource.name = name;
 	datasource.username = username;
@@ -243,12 +251,6 @@ function save(){
 	if(password != "******"){
 		password = sha256_digest($('#password').val());
 		datasource.password = password;
-	}
-	
-	
-	if(username == "" || password == ""){
-		alert("角色名和密码不能为空。");
-		return ;
 	}
 	
 	$.ajax({

@@ -1,11 +1,33 @@
 package com.factoring.web.controller.factor;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.factoring.core.util.ApplicationUtils;
+import com.factoring.core.util.JsonUtil;
 import com.factoring.web.controller.admin.AdminRoleController;
+import com.factoring.web.model.User;
+import com.factoring.web.model.factor.Product;
+import com.factoring.web.security.RoleSign;
+import com.factoring.web.service.factor.ProductService;
 
 /**
  * 视图控制器,返回jsp视图给前端
@@ -18,79 +40,56 @@ import com.factoring.web.controller.admin.AdminRoleController;
 public class ProductController {
 	
 	private final Log logger = LogFactory.getLog(AdminRoleController.class);
+	
+	@Resource
+	private ProductService productService;
 
     @RequestMapping("/page")
-    public String login() {
-        return "product";
+    public String page() {
+        return "factor/product";	
     }
 
-	/*@RequestMapping(value = "/getDate", produces="application/json; charset=utf-8")
+	@RequestMapping(value = "/getDate", produces="application/json; charset=utf-8")
 	@ResponseBody
-	@RequiresRoles(value= RoleSign.FACTOR )
-	public String getUsers(HttpServletResponse response)
+	@RequiresRoles(value= {RoleSign.FACTOR})
+	public String getProducts(HttpServletResponse response)
     {
-		List<User> allUser = userService.selectAllUser();
-		List allUserRole = userService.selectAllUserRole();
-		int count = 0;
-		for (int i = 0; i < allUser.size(); i++) {
-			String role = "";
-			User user = allUser.get(i);
-			for (; count < allUserRole.size();) {
-				Map map = (Map) allUserRole.get(count);
-				if(map.get("user_id").equals(user.getId())){
-					role = (String) map.get("role_id");
-					count ++ ;
-				}else{
-					break;
-				}
-			}
-			
-			user.setRole(role);
-		}
-        return JsonUtil.dataListToJson(allUser);
+		Subject subject = SecurityUtils.getSubject();
+		String username = String.valueOf(subject.getPrincipal());
+		
+		List<Product> allProduct = productService.selectAllProduct(username);
+		System.out.println("aaaaa============>" + JsonUtil.dataListToJson(allProduct));
+        return JsonUtil.dataListToJson(allProduct);
     }
 	
-	*//**
-	 * user页面获取类
-	 * @return
-	 *//*
-	@RequestMapping("/getUser")
+	@RequestMapping("/getProduct")
 	@ResponseBody
-	@RequiresRoles(value= RoleSign.FACTOR)
-	public User getUserbyId(String id)
+	@RequiresRoles(value= {RoleSign.FACTOR})
+	public Product getUserbyId(String id)
 	{
-		User user = userService.selectByPrimaryKey(id);
-		return user;
+		Product product = productService.selectByPrimaryKey(id);
+		return product;
 	}
 	
-	
-	*//**
+	/**
 	 * 
 	 * @param role
 	 * @param result
 	 * @param model
 	 * @return
-	 *//*
-	@RequestMapping("/updateUser")
+	 */
+	@RequestMapping("/updateProduct")
 	@ResponseBody
-	@RequiresRoles(value= RoleSign.FACTOR)
-	public String updateUser(@Valid User user, BindingResult result, Model model){
+	@RequiresRoles(value= {RoleSign.FACTOR})
+	public String updateProduct(@Valid Product product, BindingResult result, Model model){
 		try{
-			if(user.getRole() != null){ 
-				List<Map> listData = new ArrayList<Map>();
-				Map<String, String> map = new HashMap<String, String>();
-				map.put("userId", user.getId());
-				map.put("roleId", user.getRole());
-				listData.add(map);
-				userService.deleteRoleByUserId(user.getId());
-				userService.insertRoleByUserId(listData);
-			}
+			setInfo(product);//set时间
 			if (result.hasErrors()) {
 	            return result.getFieldError().getDefaultMessage();
 	        }
-			int flag = userService.updateByPrimaryKeySelective(user);
+			int flag = productService.updateByPrimaryKeySelective(product);
 			if(flag == 0){
-				if(userService.insertSelective(user) != 0){
+				if(productService.insertSelective(product) != 0){
 					return "";
 				}
 				return "error";
@@ -102,17 +101,16 @@ public class ProductController {
 		return "";
 	}
 	
-	*//**
+	/**
 	 * 
 	 * @return
-	 *//*
-	@RequestMapping("/deleteUser")
+	 */
+	@RequestMapping("/deleteProduct")
 	@ResponseBody
-	@RequiresRoles(value= RoleSign.FACTOR)
-	public String deleteUserById(@Valid String id){
+	@RequiresRoles(value= {RoleSign.FACTOR})
+	public String deleteProductById(@Valid String id){
 		try{
-			int flag = userService.deleteByPrimaryKey(id);
-			userService.deleteRoleByUserId(id);
+			int flag = productService.deleteByPrimaryKey(id);
 			if(flag == 0){
 				return "error";
 			}
@@ -121,6 +119,22 @@ public class ProductController {
 			return "error";
 		}
 		return "";
-	}*/
+	}
+	
+	public Product setInfo(Product record){
+		Subject subject = SecurityUtils.getSubject();
+		String username = String.valueOf(subject.getPrincipal());
+		
+		String time = ApplicationUtils.getCurrentTime();
+		
+		record.setUsername(username);
+		record.setCreateTime(time);
+		record.setCreatorId(username);
+		record.setModifiedTime(time);
+		record.setModifierId(username);
+		record.setRecordState("0");
+		
+		return record;
+	}
 
 }

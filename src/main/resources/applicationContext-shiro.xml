@@ -25,7 +25,7 @@
             </value>
         </property>
     </bean>
-
+    
     <!-- 缓存管理器 使用Ehcache实现 -->
     <bean id="shiroEhcacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
         <property name="cacheManagerConfigFile" value="classpath:ehcache-shiro.xml"/>

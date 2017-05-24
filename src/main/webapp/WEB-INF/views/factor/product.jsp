@@ -51,19 +51,19 @@
 						</tr>
 						<tr>
 							<td class="tb">产品名称 :</td>
-							<td class="text"><input id="product_name" type="text" name="product_name" placeholder="" /></td>
+							<td class="text"><input id="productName" type="text" name="productName" placeholder="" /></td>
 							<td class="tb">最小金额 :</td>
-							<td class="text"><input id="min_amt" type="text" name="min_amt" placeholder=""></input></td>
+							<td class="text"><input id="minAmt" type="text" name="minAmt" placeholder=""></input></td>
 						</tr>
 						<tr>
 							<td class="tb">最大金额 :</td>
-							<td class="text"><input id="max_amt" type="text" name="max_amt" placeholder="" /></td>
-							<td class="tb">日利率 :</td>
+							<td class="text"><input id="maxAmt" type="text" name="maxAmt" placeholder="" /></td>
+							<td class="tb">日利率(‱) :</td>
 							<td class="text"><input id="rate" type="text" name="rate" placeholder="" /></td>
 						</tr>
 						<tr>
 							<td class="tb">最长用款期限（天） :</td>
-							<td class="text"><input id="use_date" type="text" name="use_date" placeholder="" /></td>
+							<td class="text"><input id="useDate" type="text" name="useDate" placeholder="" /></td>
 						</tr>
 					</table>
 					<div class="ft">

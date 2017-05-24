@@ -1,5 +1,7 @@
 package com.factoring.core.util;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.UUID;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -49,6 +51,16 @@ public class ApplicationUtils {
      */
     public static String sha256Hex(String value) {
         return DigestUtils.sha256Hex(value);
+    }
+    
+    public static String getCurrentTime()
+    {
+        return (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(Calendar.getInstance().getTime());
+    }
+
+    public static String getCurrentDate()
+    {
+        return (new SimpleDateFormat("yyyy-MM-dd")).format(Calendar.getInstance().getTime());
     }
 
 }

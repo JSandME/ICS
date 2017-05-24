@@ -4,7 +4,7 @@ $(function() {
 		var handlePermissionTable = function() {
 			
 			$(function() {
-				var url = "rest/adminUser/getDate";
+				var url = "rest/product/getDate";
 				$("#reportTable").bootstrapTable({
 					url : url,
 					dataType:"JSON", 	//返回JSON格式数据
@@ -33,77 +33,59 @@ $(function() {
 					columns : [ {
 						checkbox : true
 					}, {
-						field : "name",
-						title : "用户名称",
+						field : "productName",
+						title : "产品名称",
 						editable : {
 							type : 'text',
-							title : '用户名称',
+							title : '产品名称',
 							validate : function(v) {
 								if (!v)
-									return '用户账号不能为空';
-							}
-						}
-					},{
-						field : "username",
-						title : "用户账号",
-					}, {
-						field : "password",
-						title : "登陆密码",
-						/*editable : {
-							type : 'text',
-							title : '登陆密码',
-							validate : function(v) {
-								if (!v)
-									return '登陆密码不能为空';
-							}
-						}*/
-					},{
-						field : "role",
-						title : "角色",
-						editable : {
-							type : 'select',
-							title : '角色',
-							source : function(){
-								var result = [];
-								$.ajax({
-									type : "GET",
-									async: false,
-									cache : true,
-									url : "rest/adminRole/getDate",
-									data : {},
-									dateType : 'JSON',
-									success : function(data, status){
-										$.each(eval(data), function(index, element){
-											result.push({value : element.id, text : element.description});
-										});
-									}
-								});
-								return result;
+									return '产品名称不能为空';
 							}
 						}
 					}, {
-						field : "state",
-						title : "状态",
+						field : "minAmt",
+						title : "最小金额",
 						editable : {
-							type : 'select',
-							title : '状态',
-							source : ""/*function(){
-								var result = [];
-								$.ajax({
-									type : "GET",
-									async: false,
-									cache : true,
-									url : "rest/adminPermission/getPermissionName",
-									data : {},
-									dateType : 'JSON',
-									success : function(data, status){
-										$.each(eval(data), function(index, element){
-											result.push({value : element.key, text : element.key});
-										});
-									}
-								});
-								return result;
-							}*/
+							type : 'text',
+							title : '最小金额',
+							validate : function(v) {
+								if (!v)
+									return '最小金额不能为空';
+							}
+						}
+					}, {
+						field : "maxAmt",
+						title : "最大金额",
+						editable : {
+							type : 'text',
+							title : '最大金额',
+							validate : function(v) {
+								if (!v)
+									return '最大金额不能为空';
+							}
+						}
+					},{
+						field : "rate",
+						title : "日利率(‱) ",
+						editable : {
+							type : 'text',
+							title : '日利率(‱) ',
+							validate : function(v) {
+								if (!v)
+									return '日利率不能为空';
+							}
+						}
+					}, {
+						field : "useDate",
+						title : "最长用款期限（天） ",
+						editable : {
+							type : 'text',
+							title : '最长用款期限（天）  ',
+							validate : function(v) {
+								if (!v)
+									return '最长用款期限不能为空';
+							}
 						}
 					},{
 	                	title: '操作',
@@ -116,14 +98,10 @@ $(function() {
 	                    }
 					}],
 					onEditableSave : function(field, row, oldValue, $el) {
-						var str = JSON.stringify(row.password);
-						if(typeof(str) !="undefined"){
-	                    	row.permissions=JSON.stringify(sha256_digest(str.replace(/[^0-9a-zA-Z]/ig,"")));
-						}
 						$("#reportTable").bootstrapTable("resetView");
 						$.ajax({
 							type : "post",
-							url : "rest/adminUser/updateUser",
+							url : "rest/product/updateProduct",
 							data : row,
 							dataType : 'JSON',
 							success : function(data, status) {
@@ -146,17 +124,10 @@ $(function() {
 				$("#reportTable tr th").css("background-color", "#ddd"); //改变table表头背景色 
 				$("#reportTable tr th").css("color", "#000000");//改变table表头字体颜色	
 				$("#reportTable tr th").css("font-family", "#Microsoft Yahei");//改变table表头字体样式		
-				//alert($("#fixed-table-toolbar").html());
-				/*$(".fixed-table-toolbar").append(
-						'<div style="padding-top:10px">'+//
-			        	'<a href="javascript:void(0)" onclick="" class="btn btn-info col-sm-1">新增</a>'+
-		        	    '</div>');*/
 				
 				//set进table之前进行数据处理
 				function responseHandler(res)
 				{
-					//alert(JSON.stringify(res));
-					//var rows=res.rows;
 					return res;
 				}
 				
@@ -164,9 +135,7 @@ $(function() {
 		                'check-all.bs.table uncheck-all.bs.table', function () {
 		            $('#remove').prop('disabled', !$('#reportTable').bootstrapTable('getSelections').length);
 
-		            // save your data, here just save the current page
 		            selections = getIdSelections();
-		            // push or splice the selections if you want to save all data selections
 		        });
 				
 				$('#remove').click(function () {
@@ -196,7 +165,7 @@ $(function() {
 function delRow(id){
 	$.ajax({
 		type : 'post',
-		url : "rest/adminUser/deleteUser",
+		url : "rest/product/deleteProduct",
 		async : false,
 		data : { id : id},
 		cache : false,
@@ -213,16 +182,18 @@ function delRow(id){
 function editRow(id){
 	$.ajax({
 		type : 'post',
-		url : "rest/adminUser/getUser",
+		url : "rest/product/getProduct",
 		async : true,
 		data : { id : id},
 		cache : false,
 		success : function(data ,status){
+			alert(JSON.stringify(data));
 			$('#id').val(data.id);
-			$('#name').val(data.name);
-			$('#username').val(data.username);
-			$('#password').val("******");
-			$('#state').val(data.state);
+			$('#productName').val(data.productName);
+			$('#minAmt').val(data.minAmt);
+			$('#maxAmt').val(data.maxAmt);
+			$('#rate').val(data.rate);
+			$('#useDate').val(data.useDate);
 		}
 	});
 	$('#light').css("display","block");
@@ -231,29 +202,29 @@ function editRow(id){
 
 function save(){
 	var id = $('#id').val();
-	var name = $('#name').val();
-	var username = $('#username').val();
-	var password = $('#password').val();
-	var state = $('#state').val();
+	var productName = $('#productName').val();
+	var minAmt = $('#minAmt').val();
+	var maxAmt = $('#maxAmt').val();
+	var rate = $('#rate').val();
+	var useDate = $('#useDate').val();
 	
 	var datasource ={};
-	datasource.name = name;
-	datasource.username = username;
-	datasource.state = state;
-	if(password != "******"){
-		password = sha256_digest($('#password').val());
-		datasource.password = password;
-	}
+	datasource.id = id;
+	datasource.productName = productName;
+	datasource.minAmt = minAmt;
+	datasource.maxAmt = maxAmt;
+	datasource.rate = rate;
+	datasource.useDate = useDate;
 	
 	
-	if(username == "" || password == ""){
-		alert("角色名和密码不能为空。");
+	if(productName == "" || minAmt == "" || maxAmt == "" || rate == "" || useDate == ""){
+		alert("不能有空。");
 		return ;
 	}
 	
 	$.ajax({
 		type : 'post',
-		url : "rest/adminUser/updateUser",
+		url : "rest/product/updateProduct",
 		async : true,
 		data : datasource,
 		cache : false,
@@ -264,7 +235,7 @@ function save(){
 				alert("保存成功。");
 				$('#reportTable').bootstrapTable('refresh');
 			}else{
-				alert("保存失败，可能已存在改登录名。");
+				alert("保存失败.");
 			}
 		},
 		error : function(data, status) {
@@ -275,10 +246,11 @@ function save(){
 
 function newRow(){
 	$('#id').val("");
-	$('#name').val("");
-	$('#username').val("");
-	$('#password').val("");
-	$('#state').val("");
+	$('#productName').val("");
+	$('#minAmt').val("");
+	$('#maxAmt').val("");
+	$('#rate').val("");
+	$('#useDate').val("");
 	$('#light').css("display","block");
 	$('#fade').css("display","block");
 }
