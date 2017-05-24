@@ -7,7 +7,7 @@ import javax.annotation.Resource;
 import com.factoring.core.feature.test.TestSupport;
 import com.factoring.core.util.ApplicationUtils;
 import com.factoring.web.model.User;
-import com.factoring.web.service.UserService;
+import com.factoring.web.service.common.UserService;
 
 public class UserServiceTest extends TestSupport {
 
