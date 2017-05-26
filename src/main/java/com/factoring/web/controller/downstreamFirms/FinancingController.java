@@ -1,14 +1,35 @@
 package com.factoring.web.controller.downstreamFirms;
 
+import javax.annotation.Resource;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.factoring.web.model.User;
+import com.factoring.web.service.common.UserService;
+
+@Controller
+@RequestMapping("/downstreamFirms")
 public class FinancingController {
 
-	@RequestMapping(value = "/manage", produces="application/json; charset=utf-8")
-	@ResponseBody
-	public String manage() {
-		return "financing management";
+	private final Log logger = LogFactory.getLog(FinancingController.class);
+	
+	@Resource
+	private UserService userService;
+
+	/**
+	 * 访问页面
+	 * @return
+	 */
+	@RequestMapping("/page")
+	public String page(){
+		return "downstreamFirms/applyFinancing";
 	}
 	
 	@RequestMapping(value = "/apply", produces="application/json; charset=utf-8")

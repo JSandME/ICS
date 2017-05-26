@@ -58,7 +58,6 @@ public class ProductController {
 		String username = String.valueOf(subject.getPrincipal());
 		
 		List<Product> allProduct = productService.selectAllProduct(username);
-		System.out.println("aaaaa============>" + JsonUtil.dataListToJson(allProduct));
         return JsonUtil.dataListToJson(allProduct);
     }
 	
