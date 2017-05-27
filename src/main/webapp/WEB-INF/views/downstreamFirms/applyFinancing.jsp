@@ -36,6 +36,9 @@
 					<span>申请融资</span>
 				</h1>
 				<div class="bd">
+					<div style="margin: 10px; ">可融资金额为（元）：
+						<a id="valid_money" style="text-decoration:none;color:red;">100000</a>
+					</div>
 					<table style="width:70%;margin: 0 auto;">
 						<tr>
 							<td>融资人 :</td>
@@ -46,7 +49,7 @@
 							<td><input id="appAmt" type="text" name="appAmt" placeholder=""></input></td>
 						</tr>
 						<tr>
-							<td >用款日期 :</td>
+							<td >用款天数 :</td>
 							<td><input id="use_date" type="text" name="use_date" placeholder=""></input></td>
 						</tr>
 						<tr>
@@ -54,7 +57,7 @@
 							<td><select id="products"></select></td>
 						</tr>
 					</table>
-					<div class="ft">
+					<div class="ft" style="margin: 10px,0;">
 						<a href="javascript:void(0)" class="btn btn-info"  onclick="save()">提交</a>
 					</div>
 				</div>
