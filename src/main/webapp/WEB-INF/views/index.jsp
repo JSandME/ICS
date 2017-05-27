@@ -151,11 +151,6 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                                        	 密码修改
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="javascript:;">
-                                       	 金融产品管理
-                                    </a>
-                                </li>
                                 
                                 <!-- 测试权限控制 -->
                                 <shiro:hasAnyRoles name="admin">
