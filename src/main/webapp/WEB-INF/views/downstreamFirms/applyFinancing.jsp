@@ -37,7 +37,7 @@
 				</h1>
 				<div class="bd">
 					<div style="margin: 10px; ">可融资金额为（元）：
-						<a id="valid_money" style="text-decoration:none;color:red;">100000</a>
+						<a id="valid_money" style="text-decoration:none;color:red;">${validMenoy}</a>
 					</div>
 					<table style="width:70%;margin: 0 auto;">
 						<tr>
