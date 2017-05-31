@@ -42,7 +42,7 @@
 					<table style="width:70%;margin: 0 auto;">
 						<tr>
 							<td>融资人 :</td>
-							<td><input id="name" type="text" name="pull" placeholder="" value="${userInfo.name}"/></td>
+							<td><input id="name" type="text" name="pull" placeholder="" value="${userInfo.name}" disabled="disabled"/></td>
 						</tr>
 						<tr>
 							<td>融资金额 :</td>
@@ -50,7 +50,7 @@
 						</tr>
 						<tr>
 							<td >用款天数 :</td>
-							<td><input id="use_date" type="text" name="use_date" placeholder=""></input></td>
+							<td><input id="use_date" type="text" name="use_date" placeholder="" ></input></td>
 						</tr>
 						<tr>
 							<td >融资产品 :</td>
@@ -58,7 +58,7 @@
 						</tr>
 					</table>
 					<div class="ft" style="margin: 10px,0;">
-						<a href="javascript:void(0)" class="btn btn-info"  onclick="save()">提交</a>
+						<a id="btn_save" href="javascript:void(0)" class="btn btn-info"  onclick="save()">提交</a>
 					</div>
 				</div>
 			</div>
@@ -81,6 +81,6 @@
 <script src="assets/plugins/tableExport.js" type="text/javascript"></script>
 <script src="assets/plugins/jquery.base64.js" type="text/javascript"></script>
 <script src="assets/plugins/select2/select2.min.js" type="text/javascript"></script>
-<script src="assets/scripts/factor/product.js" type="text/javascript"></script>
+<script src="assets/scripts/downstreamFirms/apply.js" type="text/javascript"></script>
 
 <script src="app/lib/security/sha256.js" type="text/javascript"></script>

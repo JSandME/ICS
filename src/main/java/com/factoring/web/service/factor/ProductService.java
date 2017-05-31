@@ -48,4 +48,10 @@ public interface ProductService extends GenericService<Product, String> {
      */
     Product selectByPrimaryKey(String id);
     
+    /**
+     * 根据金额匹配产品
+     * @return
+     */
+    List<Product> selectProductsByAmt(String amt);
+    
 }

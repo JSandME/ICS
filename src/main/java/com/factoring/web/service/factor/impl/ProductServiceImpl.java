@@ -48,4 +48,9 @@ public class ProductServiceImpl extends GenericServiceImpl<Product, String> impl
 		return productMapper;
 	}
 
+	@Override
+	public List<Product> selectProductsByAmt(String amt) {
+		return productMapper.selectProductsByAmt(amt);
+	}
+
 }

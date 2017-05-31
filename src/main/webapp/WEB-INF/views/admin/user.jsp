@@ -51,7 +51,7 @@
 						</tr>
 						<tr>
 							<td class="tb">用户账号 :</td>
-							<td class="text"><input id="username" type="text" name="username" placeholder="" /></td>
+							<td class="text"><input id="username" type="text" name="username" placeholder="" disabled="disabled"/></td>
 							<td class="tb">登陆密码 :</td>
 							<td class="text"><input id="password" type="text" name="password" placeholder=""></input></td>
 						</tr>

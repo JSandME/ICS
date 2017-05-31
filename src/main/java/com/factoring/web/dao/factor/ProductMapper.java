@@ -26,4 +26,6 @@ public interface ProductMapper extends GenericDao<Product, String> {
     
     int updateByPrimaryKeySelective(Product record);
     
+    List<Product> selectProductsByAmt(String amt);
+    
 }

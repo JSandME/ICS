@@ -1,5 +1,7 @@
 package com.factoring.web.controller.downstreamFirms;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
@@ -12,10 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.factoring.core.util.ApplicationUtils;
+import com.factoring.core.util.JsonUtil;
 import com.factoring.web.model.downstreamFirms.Credit;
 import com.factoring.web.model.factor.Product;
-import com.factoring.web.service.common.UserService;
 import com.factoring.web.service.downstreamFirms.CreditService;
+import com.factoring.web.service.factor.ProductService;
 
 @Controller
 @RequestMapping("/downstreamFirms")
@@ -24,7 +27,7 @@ public class FinancingController {
 	private final Log logger = LogFactory.getLog(FinancingController.class);
 	
 	@Resource
-	private UserService userService;
+	private ProductService productService;
 	
 	@Resource
 	private CreditService creditService;
@@ -52,6 +55,15 @@ public class FinancingController {
 			model.addAttribute("validMenoy", 100000);
 		}
 		return "downstreamFirms/applyFinancing";
+	}
+	
+	@RequestMapping(value = "/getProducts", produces="application/json; charset=utf-8")
+	@ResponseBody
+	public String getProduct(String appAmt) {
+		List<Product> products = productService.selectProductsByAmt(appAmt);
+		System.out.println(appAmt);
+		System.out.println(JsonUtil.dataListToJson(products));
+		return JsonUtil.dataListToJson(products);
 	}
 	
 	@RequestMapping(value = "/apply", produces="application/json; charset=utf-8")

@@ -102,4 +102,8 @@
     <select id="selectAllProduct" resultMap="BaseResultMap" parameterType="map">
     	SELECT * FROM product where username=#{username} and  record_state='0' ORDER BY id
     </select>
+    
+    <select id="selectProductsByAmt" resultMap="BaseResultMap" parameterType="java.lang.String">
+    	SELECT * FROM product where max_amt >= #{amt} and #{amt} >= min_amt and  record_state='0' ORDER BY id
+    </select>
 </mapper>
