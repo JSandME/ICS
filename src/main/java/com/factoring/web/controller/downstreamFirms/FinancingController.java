@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.factoring.core.util.ApplicationUtils;
 import com.factoring.core.util.JsonUtil;
 import com.factoring.web.model.downstreamFirms.Credit;
+import com.factoring.web.model.downstreamFirms.FinancingApply;
 import com.factoring.web.model.factor.Product;
 import com.factoring.web.service.downstreamFirms.CreditService;
 import com.factoring.web.service.factor.ProductService;
@@ -68,7 +69,7 @@ public class FinancingController {
 	
 	@RequestMapping(value = "/apply", produces="application/json; charset=utf-8")
 	@ResponseBody
-	public String apply() {
+	public String apply(FinancingApply financingApply) {
 		return "apply financing";
 	}
 	

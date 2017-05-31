@@ -55,7 +55,7 @@ function save(){
 	$.ajax({
 		type : "get",
 		url : "rest/downstreamFirms/apply",
-		data : {product_id : productId, app_amt : appAmt, use_date : use_date},
+		data : {productId : productId, appAmt : appAmt, useDate : use_date},
 		dataType : 'JSON',
 		success : function(data, status) {
 			$('#btn_save').removeAttr("disabled");
