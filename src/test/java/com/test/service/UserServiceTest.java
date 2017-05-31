@@ -1,7 +1,5 @@
 package com.test.service;
 
-import java.util.Date;
-
 import javax.annotation.Resource;
 
 import com.factoring.core.feature.test.TestSupport;

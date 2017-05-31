@@ -15,6 +15,8 @@ import com.factoring.web.model.User;
  **/
 public interface UserService extends GenericService<User, String> {
 	
+	User selectByUserName(String username);
+	
 	/**
      * 插入
      * @param record

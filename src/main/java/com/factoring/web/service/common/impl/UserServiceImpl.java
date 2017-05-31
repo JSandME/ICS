@@ -104,4 +104,10 @@ public class UserServiceImpl extends GenericServiceImpl<User, String> implements
 		return userMapper.insertSelective(user);
 	}
 
+	@Override
+	public User selectByUserName(String username) {
+		return userMapper.selectByUserName(username);
+	}
+	
+
 }

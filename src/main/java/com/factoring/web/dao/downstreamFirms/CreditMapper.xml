@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.factoring.web.dao.downstreamFirms.CreditMapper">
+    <resultMap id="BaseResultMap" type="com.factoring.web.model.downstreamFirms.Credit">
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="username" property="username" jdbcType="VARCHAR" />
+        <result column="star" property="star" jdbcType="CHAR" />
+        <result column="bad_record" property="badRecord" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+        <result column="creator_id" property="creatorId" jdbcType="VARCHAR" />
+        <result column="modified_time" property="modifiedTime" jdbcType="VARCHAR" />
+        <result column="modifier_id" property="modifierId" jdbcType="VARCHAR" />
+        <result column="record_state" property="recordState" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, username, star, bad_record, create_time, creator_id, modified_time, modifier_id, record_state
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from credit
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from credit
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.factoring.web.model.downstreamFirms.Credit">
+        insert into 
+        	credit 
+        	(id, username, star, bad_record, create_time, creator_id, modified_time, modifier_id, record_state)
+        values 
+        	(#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{star,jdbcType=CHAR}, #{badRecord,jdbcType=INTEGER},
+        		#{createTime,jdbcType=VARCHAR}, #{creatorId,jdbcType=VARCHAR}, #{modifiedTime,jdbcType=VARCHAR}, 
+        		#{modifierId,jdbcType=VARCHAR}, #{recordState,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.factoring.web.model.downstreamFirms.Credit">
+        insert into credit
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,
+            <if test="username != null">username,</if>
+            <if test="star != null">star,</if>
+            <if test="badRecord != null">bad_record,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="creatorId != null">creator_id,</if>
+            <if test="modifiedTime != null">modified_time,</if>
+            <if test="modifierId != null">modifier_id,</if>
+            <if test="recordState != null">record_state,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                newUUID(),
+            <if test="username != null">#{username,jdbcType=VARCHAR},</if>
+            <if test="star != null">#{star,jdbcType=CHAR},</if>
+            <if test="badRecord != null">#{badRecord,jdbcType=INTEGER},</if>
+            <if test="createTime != null">#{createTime,jdbcType=VARCHAR},</if>
+            <if test="creatorId != null">#{creatorId,jdbcType=VARCHAR},</if>
+            <if test="modifiedTime != null">#{modifiedTime,jdbcType=VARCHAR},</if>
+            <if test="modifierId != null">#{modifierId,jdbcType=VARCHAR},</if>
+            <if test="recordState != null">#{recordState,jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.factoring.web.model.downstreamFirms.Credit">
+        update credit
+        <set>
+            <if test="username != null">username = #{username,jdbcType=VARCHAR},</if>
+            <if test="star != null">star = #{star,jdbcType=CHAR},</if>
+            <if test="badRecord != null">bad_record = #{badRecord,jdbcType=INTEGER},</if>
+            <if test="modifiedTime != null">modified_time = #{modifiedTime,jdbcType=VARCHAR},</if>
+            <if test="modifierId != null">modifier_id = #{modifierId,jdbcType=VARCHAR},</if>
+            <if test="recordState != null">record_state = #{recordState,jdbcType=VARCHAR},</if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.factoring.web.model.downstreamFirms.Credit">
+        update
+        	credit
+        set 
+        	username = #{username,jdbcType=VARCHAR},
+        	star = #{star,jdbcType=CHAR},
+        	bad_record = #{badRecord,jdbcType=INTEGER},
+        	modified_time = #{modifiedTime,jdbcType=VARCHAR},
+        	modifier_id = #{modifierId,jdbcType=VARCHAR},
+        	record_state = #{recordState,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    
+    <select id="selectCreditByUserName" resultMap="BaseResultMap" parameterType="map">
+    	SELECT * FROM credit where username=#{username} and  record_state='0'
+    </select>
+    
+</mapper>

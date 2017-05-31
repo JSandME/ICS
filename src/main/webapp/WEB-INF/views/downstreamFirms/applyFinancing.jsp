@@ -1,4 +1,4 @@
-<%@ page language="java" pageEncoding="utf-8"%>
+	<%@ page language="java" pageEncoding="utf-8"%>
 <link href="assets/plugins/bootstrap-table/css/bootstrap-table.min.css"
 	rel="stylesheet" type="text/css" />
 <link
@@ -17,12 +17,12 @@
 <div class="row">
 	<div class="col-md-12">
 		<!-- BEGIN PAGE TITLE & BREADCRUMB-->
-		<h3 class="page-title" id="index-page-title">用户管理</h3>
+		<h3 class="page-title" id="index-page-title">申请融资</h3>
 		<ul class="page-breadcrumb breadcrumb" id="breadcrumb">
-			<li><i class="fa fa-gears"></i> <a href="javascript:;"> 系统管理
+			<li><i class="fa fa-list-alt"></i> <a href="javascript:;"> 功能
 			</a> <i class="fa fa-angle-right"></i>
 			</li>
-			<li><a href="javascript:;"> 用户管理 </a></li>
+			<li><a href="javascript:;"> 申请融资 </a></li>
 		</ul>
 		<!-- END PAGE TITLE & BREADCRUMB-->
 	</div>
@@ -30,46 +30,39 @@
 <!-- END PAGE HEADER-->
 <!-- BEGIN BODY-->
 <div class="row">
-	<div id="toolbar">
-        <button id="add" class="btn btn-primary" onclick="newUser()">
-            <i class="glyphicon glyphicon-plus"></i> 新增
-        </button>
-    </div>
 	<div class="col-lg-12">
-		<table id="reportTable" class="table-striped">
-		</table>
-	</div>
-		<div id="light" class="white-pink white_content box-shadow-3">
-			<div class="divcontext">
-				<h1>用户管理
-					<span>用户详细信息</span>
+		<div class="white-pink">
+				<h1>申请融资
+					<span>申请融资</span>
 				</h1>
 				<div class="bd">
-					<table>
-						<tr style="display: none;">
-							<td><input id="id" type="text"/></td>
+					<div style="margin: 10px; ">可融资金额为（元）：
+						<a id="valid_money" style="text-decoration:none;color:red;">${validMenoy}</a>
+					</div>
+					<table style="width:70%;margin: 0 auto;">
+						<tr>
+							<td>融资人 :</td>
+							<td><input id="name" type="text" name="pull" placeholder="" value="${userInfo.name}" disabled="disabled"/></td>
 						</tr>
 						<tr>
-							<td class="tb">用户账号 :</td>
-							<td class="text"><input id="username" type="text" name="username" placeholder="" disabled="disabled"/></td>
-							<td class="tb">登陆密码 :</td>
-							<td class="text"><input id="password" type="text" name="password" placeholder=""></input></td>
+							<td>融资金额 :</td>
+							<td><input id="appAmt" type="text" name="appAmt" placeholder=""></input></td>
 						</tr>
 						<tr>
-							<td class="tb">用户名称 :</td>
-							<td class="text"><input id="name" type="text" name="name" placeholder="" /></td>
-							<td class="tb">状态 :</td>
-							<td class="text"><select id="state"></select></td>
+							<td >用款天数 :</td>
+							<td><input id="use_date" type="text" name="use_date" placeholder="" ></input></td>
+						</tr>
+						<tr>
+							<td >融资产品 :</td>
+							<td><select id="products"></select></td>
 						</tr>
 					</table>
-					<div class="ft">
-						<a href="javascript:void(0)" class="btn btn-info"  onclick="save()">提交</a>
-						<a href="javascript:void(0)" class="btn btn-info"  onclick="document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none';">关闭</a>
+					<div class="ft" style="margin: 10px,0;">
+						<a id="btn_save" href="javascript:void(0)" class="btn btn-info"  onclick="save()">提交</a>
 					</div>
 				</div>
 			</div>
-		</div>
-	<div id="fade" class="black_overlay"></div> 
+	</div>
 </div>
 <!-- END BODY-->
 <script src="assets/plugins/bootstrap-table/js/bootstrap-table.min.js"
@@ -88,6 +81,6 @@
 <script src="assets/plugins/tableExport.js" type="text/javascript"></script>
 <script src="assets/plugins/jquery.base64.js" type="text/javascript"></script>
 <script src="assets/plugins/select2/select2.min.js" type="text/javascript"></script>
-<script src="assets/scripts/admin/user.js" type="text/javascript"></script>
+<script src="assets/scripts/downstreamFirms/apply.js" type="text/javascript"></script>
 
 <script src="app/lib/security/sha256.js" type="text/javascript"></script>
