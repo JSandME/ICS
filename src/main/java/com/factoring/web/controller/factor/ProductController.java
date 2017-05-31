@@ -136,5 +136,21 @@ public class ProductController {
 		
 		return record;
 	}
+	
+	@RequestMapping("/queryProduct")
+	@ResponseBody
+	@RequiresRoles(value= {RoleSign.FACTOR})
+	public String queryProduct(@Valid String amount){
+		try{
+			int flag = productService.deleteByPrimaryKey(id);
+			if(flag == 0){
+				return "error";
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
+		return "";
+	}
 
 }

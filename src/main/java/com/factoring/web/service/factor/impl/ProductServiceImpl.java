@@ -48,4 +48,10 @@ public class ProductServiceImpl extends GenericServiceImpl<Product, String> impl
 		return productMapper;
 	}
 
+	@Override
+	public Product selectByAmount(String amount) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
