@@ -13,13 +13,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.factoring.core.entity.ServiceException;
 import com.factoring.core.util.ApplicationUtils;
 import com.factoring.core.util.JsonUtil;
+import com.factoring.web.controller.common.MessageCommon;
+import com.factoring.web.model.Response;
 import com.factoring.web.model.downstreamFirms.Credit;
 import com.factoring.web.model.downstreamFirms.FinancingApply;
 import com.factoring.web.model.factor.Product;
 import com.factoring.web.service.downstreamFirms.CreditService;
+import com.factoring.web.service.downstreamFirms.FinancingApplyService;
 import com.factoring.web.service.factor.ProductService;
+import com.factoring.web.util.ResponseUtil;
 
 @Controller
 @RequestMapping("/downstreamFirms")
@@ -32,6 +37,9 @@ public class FinancingController {
 	
 	@Resource
 	private CreditService creditService;
+	
+	@Resource
+	private FinancingApplyService financingService;
 
 	/**
 	 * 访问页面
@@ -69,8 +77,18 @@ public class FinancingController {
 	
 	@RequestMapping(value = "/apply", produces="application/json; charset=utf-8")
 	@ResponseBody
-	public String apply(FinancingApply financingApply) {
-		return "apply financing";
+	public Response apply(FinancingApply financingApply) {
+		try {
+			financingService.insert(financingApply);
+			return ResponseUtil.ConvertToSuccessResponse();
+		}catch(ServiceException e) {
+			logger.error(e.getMessage());
+			return ResponseUtil.ConvertToFailResponse(MessageCommon.STATUS_FINANCING_APPLY_FAIL, MessageCommon.FAIL_FINANCING_APPLY);
+		}catch(Exception e) {
+			logger.error(e.getMessage());
+			return ResponseUtil.ConvertToFailResponse();
+		}
+		
 	}
 	
 	@RequestMapping(value = "/dealWith", produces="application/json; charset=utf-8")

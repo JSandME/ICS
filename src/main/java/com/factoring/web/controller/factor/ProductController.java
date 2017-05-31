@@ -139,7 +139,7 @@ public class ProductController {
 	@RequestMapping("/queryProduct")
 	@ResponseBody
 	@RequiresRoles(value= {RoleSign.FACTOR})
-	public String queryProduct(@Valid String amount){
+	public String queryProduct(@Valid String id){
 		try{
 			int flag = productService.deleteByPrimaryKey(id);
 			if(flag == 0){
