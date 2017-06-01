@@ -5,7 +5,9 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.factoring.core.entity.ServiceException;
 import com.factoring.core.generic.GenericDao;
 import com.factoring.core.generic.GenericServiceImpl;
 import com.factoring.web.dao.downstreamFirms.FinancingApplyMapper;
@@ -19,7 +21,8 @@ public class FinancingApplyServiceImpl extends GenericServiceImpl<FinancingApply
 	private FinancingApplyMapper financingApplyMapper;
 
 	@Override
-	public int insertSelective(FinancingApply apply) {
+	@Transactional(rollbackFor = ServiceException.class)
+	public int insertSelective(FinancingApply apply) throws ServiceException{
 		return financingApplyMapper.insertSelective(apply);
 	}
 

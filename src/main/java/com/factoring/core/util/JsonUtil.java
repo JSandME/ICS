@@ -8,7 +8,7 @@ import net.sf.json.*;
 public class JsonUtil
 {
 
-    public JsonUtil()
+    private JsonUtil()
     {
     }
 

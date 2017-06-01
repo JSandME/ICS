@@ -48,6 +48,14 @@ public interface ProductService extends GenericService<Product, String> {
      */
     Product selectByPrimaryKey(String id);
     
+    
+    /**
+     * 通过申请额度查询融资产品
+     * @param amount
+     * @return
+     */
+    Product selectByAmount(String amount);
+    
     /**
      * 根据金额匹配产品
      * @return
