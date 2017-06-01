@@ -1,5 +1,7 @@
 package com.factoring.web.service.downstreamFirms.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -22,7 +24,7 @@ public class FinancingApplyServiceImpl extends GenericServiceImpl<FinancingApply
 	}
 
 	@Override
-	public FinancingApply selectFinancingApplyByUserName(String username) {
+	public List<FinancingApply> selectFinancingApplyByUserName(String username) {
 		return financingApplyMapper.selectFinancingApplyByUserName(username);
 	}
 

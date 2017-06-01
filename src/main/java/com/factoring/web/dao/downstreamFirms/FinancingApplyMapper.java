@@ -1,5 +1,7 @@
 package com.factoring.web.dao.downstreamFirms;
 
+import java.util.List;
+
 import com.factoring.core.generic.GenericDao;
 import com.factoring.web.model.downstreamFirms.Credit;
 import com.factoring.web.model.downstreamFirms.FinancingApply;
@@ -20,7 +22,7 @@ public interface FinancingApplyMapper extends GenericDao<FinancingApply, String>
 
     FinancingApply selectByPrimaryKey(String id);
 
-    FinancingApply selectFinancingApplyByUserName(String username);
+    List<FinancingApply> selectFinancingApplyByUserName(String username);
     
     int updateByPrimaryKeySelective(FinancingApply record);
     

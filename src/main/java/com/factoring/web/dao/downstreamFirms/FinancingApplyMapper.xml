@@ -61,12 +61,12 @@
         <trim prefix="values (" suffix=")" suffixOverrides=",">
                 newUUID(),
             <if test="username != null">#{username,jdbcType=VARCHAR},</if>
-            <if test="roleName != null">#{role_name,jdbcType=VARCHAR},</if>
-            <if test="productId != null">#{product_id,jdbcType=VARCHAR},</if>
-            <if test="appAmt != null">#{app_amt,jdbcType=VARCHAR},</if>
+            <if test="roleName != null">#{roleName,jdbcType=VARCHAR},</if>
+            <if test="productId != null">#{productId,jdbcType=VARCHAR},</if>
+            <if test="appAmt != null">#{appAmt,jdbcType=VARCHAR},</if>
             <if test="rate != null">#{rate,jdbcType=VARCHAR},</if>
-            <if test="useDate != null">#{use_date,jdbcType=INTEGER},</if>
-            <if test="appDate != null">#{app_date,jdbcType=VARCHAR},</if>
+            <if test="useDate != null">#{useDate,jdbcType=INTEGER},</if>
+            <if test="appDate != null">#{appDate,jdbcType=VARCHAR},</if>
             <if test="state != null">#{state,jdbcType=CHAR},</if>
             <if test="createTime != null">#{createTime,jdbcType=VARCHAR},</if>
             <if test="creatorId != null">#{creatorId,jdbcType=VARCHAR},</if>
@@ -109,7 +109,7 @@
         where id = #{id,jdbcType=VARCHAR}
     </update>
     
-    <select id="selectCreditByUserName" resultMap="BaseResultMap" parameterType="map">
+    <select id="selectFinancingApplyByUserName" resultMap="BaseResultMap" parameterType="map">
     	SELECT * FROM financing_apply where username=#{username} and  record_state='0'
     </select>
     

@@ -1,7 +1,8 @@
 package com.factoring.web.service.downstreamFirms;
 
+import java.util.List;
+
 import com.factoring.core.generic.GenericService;
-import com.factoring.web.model.downstreamFirms.Credit;
 import com.factoring.web.model.downstreamFirms.FinancingApply;
 
 /**
@@ -23,7 +24,7 @@ public interface FinancingApplyService extends GenericService<FinancingApply, St
      * 查询所有的
      * @return
      */
-    FinancingApply selectFinancingApplyByUserName(String username);
+    List<FinancingApply> selectFinancingApplyByUserName(String username);
     
     /**
      * 更新

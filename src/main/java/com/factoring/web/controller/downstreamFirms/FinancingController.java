@@ -19,6 +19,7 @@ import com.factoring.web.model.downstreamFirms.Credit;
 import com.factoring.web.model.downstreamFirms.FinancingApply;
 import com.factoring.web.model.factor.Product;
 import com.factoring.web.service.downstreamFirms.CreditService;
+import com.factoring.web.service.downstreamFirms.FinancingApplyService;
 import com.factoring.web.service.factor.ProductService;
 
 @Controller
@@ -32,6 +33,9 @@ public class FinancingController {
 	
 	@Resource
 	private CreditService creditService;
+	
+	@Resource
+	private FinancingApplyService financingApplyService;
 
 	/**
 	 * 访问页面
@@ -62,15 +66,62 @@ public class FinancingController {
 	@ResponseBody
 	public String getProduct(String appAmt) {
 		List<Product> products = productService.selectProductsByAmt(appAmt);
-		System.out.println(appAmt);
-		System.out.println(JsonUtil.dataListToJson(products));
 		return JsonUtil.dataListToJson(products);
 	}
 	
 	@RequestMapping(value = "/apply", produces="application/json; charset=utf-8")
 	@ResponseBody
 	public String apply(FinancingApply financingApply) {
-		return "apply financing";
+		try{
+			Subject subject = SecurityUtils.getSubject();
+			String username = String.valueOf(subject.getPrincipal());
+			Credit credit = creditService.selectCreditByUserName(username);
+			
+			int validMenoy = 0;
+			if(credit != null){
+				validMenoy =(int) Math.pow(10, credit.getBadRecord() < 3 ? 6 - credit.getBadRecord():0);
+			}
+			if(validMenoy < Double.valueOf(financingApply.getAppAmt())){
+				return "error";
+			}
+			
+			Product product = productService.selectByPrimaryKey(financingApply.getProductId());
+			if(product != null){
+				String time = ApplicationUtils.getCurrentTime();
+				
+				financingApply.setUsername(username);
+				financingApply.setRate(product.getRate());
+				financingApply.setAppDate(ApplicationUtils.getCurrentDate());
+				financingApply.setState("0");//申请状态——申请中
+				financingApply.setCreateTime(time);
+				financingApply.setCreatorId(username);
+				financingApply.setModifiedTime(time);
+				financingApply.setModifierId(username);
+				financingApply.setRecordState("0");
+				
+				financingApplyService.insertSelective(financingApply);
+			}else{
+				return "error";
+			}
+			return "";
+		}catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
+	}
+	
+	@RequestMapping(value = "/applyInfoPage")
+	public String applyInfoPage(){
+		return "downstreamFirms/applyFinancingInfo";
+	}
+	
+	@RequestMapping(value = "/applyInfo", produces="application/json; charset=utf-8")
+	@ResponseBody
+	public String getApplyInfo(){
+		Subject subject = SecurityUtils.getSubject();
+		String username = String.valueOf(subject.getPrincipal());
+		List<FinancingApply> listdata = financingApplyService.selectFinancingApplyByUserName(username);
+		return JsonUtil.dataListToJson(listdata);
 	}
 	
 	@RequestMapping(value = "/dealWith", produces="application/json; charset=utf-8")

@@ -50,7 +50,6 @@ function save(){
 	var use_date = $('#use_date').val();
 	var productId = $('#products option:selected').val();
 	
-	return;
 	$('#btn_save').attr("disabled","disabled");
 	$.ajax({
 		type : "get",
@@ -60,11 +59,11 @@ function save(){
 		success : function(data, status) {
 			$('#btn_save').removeAttr("disabled");
 			if(status == "success"){
-				if(data=='success'){
-					alert("请求成功。");
-				}else{
-					alert(data);
-				}
+				alert("请求成功。");
+				$('#name').val("");
+				$('#appAmt').val("");
+				$('#use_date').val("");
+				$('#products').empty();
 			}
 		},
 		error : function(data, status) {

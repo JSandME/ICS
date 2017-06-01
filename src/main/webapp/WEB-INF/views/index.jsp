@@ -131,6 +131,11 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 											申请融资
 	                                    </a>
 	                                </li>
+	                                <li>
+	                                    <a href="rest/downstreamFirms/applyInfoPage">
+											融资申请信息
+	                                    </a>
+	                                </li>
 	                            </ul>
 	                    </li>
 	                    </shiro:hasAnyRoles>
