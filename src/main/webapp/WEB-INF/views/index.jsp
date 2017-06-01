@@ -127,6 +127,11 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	                                    </a>
 	                                </li>
 	                                <li>
+	                                    <a href="rest/downstreamFirms/approvePage">
+											融资审批
+	                                    </a>
+	                                </li>
+	                                <li>
 	                                    <a href="rest/downstreamFirms/page">
 											申请融资
 	                                    </a>

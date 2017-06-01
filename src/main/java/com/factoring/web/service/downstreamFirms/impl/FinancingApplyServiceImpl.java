@@ -1,6 +1,7 @@
 package com.factoring.web.service.downstreamFirms.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -49,6 +50,11 @@ public class FinancingApplyServiceImpl extends GenericServiceImpl<FinancingApply
 	@Override
 	public GenericDao<FinancingApply, String> getDao() {
 		return financingApplyMapper;
+	}
+
+	@Override
+	public List<FinancingApply> selectFinancingApplyByState(Map map) {
+		return financingApplyMapper.selectFinancingApplyByState(map);
 	}
 
 }

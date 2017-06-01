@@ -7,8 +7,8 @@ public class FinancingApply {
 	private String roleName;
 	private String productId;
 	private String appAmt;
-	private double rate;
-	private int useDate;
+	private String rate;
+	private String useDate;
 	private String appDate;
 	private String state;
 	private String createTime;
@@ -47,16 +47,16 @@ public class FinancingApply {
 	public void setAppAmt(String appAmt) {
 		this.appAmt = appAmt;
 	}
-	public double getRate() {
+	public String getRate() {
 		return rate;
 	}
-	public void setRate(double rate) {
+	public void setRate(String rate) {
 		this.rate = rate;
 	}
-	public int getUseDate() {
+	public String getUseDate() {
 		return useDate;
 	}
-	public void setUseDate(int useDate) {
+	public void setUseDate(String useDate) {
 		this.useDate = useDate;
 	}
 	public String getAppDate() {

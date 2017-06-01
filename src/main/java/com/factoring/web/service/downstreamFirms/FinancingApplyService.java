@@ -1,6 +1,7 @@
 package com.factoring.web.service.downstreamFirms;
 
 import java.util.List;
+import java.util.Map;
 
 import com.factoring.core.generic.GenericService;
 import com.factoring.web.model.downstreamFirms.FinancingApply;
@@ -46,5 +47,12 @@ public interface FinancingApplyService extends GenericService<FinancingApply, St
      * @return
      */
     FinancingApply selectByPrimaryKey(String id);
+    
+    /**
+     * 根据申请表状态和保理商username来筛选
+     * @param map
+     * @return
+     */
+    List<FinancingApply> selectFinancingApplyByState(Map map);
     
 }

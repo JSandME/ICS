@@ -113,4 +113,19 @@
     	SELECT * FROM financing_apply where username=#{username} and  record_state='0'
     </select>
     
+    <select id="selectFinancingApplyByState" resultType="java.util.Map" parameterType="map">
+    	SELECT
+			`user`.name,apply.*
+		FROM
+			`user`,
+			financing_apply apply,
+			product pro
+		WHERE
+		`user`.username = apply.username
+		AND apply.record_state = '0'
+		AND apply.product_id = pro.id
+		AND pro.username = #{username}
+		<if test="state != null">AND apply.state = #{state}</if>
+    </select>
+    
 </mapper>

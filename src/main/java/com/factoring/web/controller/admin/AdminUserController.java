@@ -118,10 +118,15 @@ public class AdminUserController{
 			if (result.hasErrors()) {
 	            return result.getFieldError().getDefaultMessage();
 	        }
+			System.out.println("a=>" + user.getId());
+			System.out.println("b=>" + user.getUsername());
+			System.out.println("c=>" + user.getPassword());
+			System.out.println("d=>" + user.getName());
+			System.out.println("d=>" + user.getName());
 			int flag = userService.updateByPrimaryKeySelective(user);
 			if(flag == 0){
 				if(userService.insertSelective(user) != 0){
-					return "";
+					return "success";
 				}
 				return "error";
 			}

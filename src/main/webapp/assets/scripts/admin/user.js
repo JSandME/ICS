@@ -211,6 +211,7 @@ function delRow(id){
 }
 
 function editRow(id){
+	$('#username').attr("disabled","disabled");
 	$.ajax({
 		type : 'post',
 		url : "rest/adminUser/getUser",
@@ -245,6 +246,7 @@ function save(){
 	}
 	
 	var datasource ={};
+	datasource.id = id;
 	datasource.name = name;
 	datasource.username = username;
 	datasource.state = state;
@@ -260,13 +262,13 @@ function save(){
 		data : datasource,
 		cache : false,
 		success : function(data ,status){
-			if(data != "error"){
+			if(data == "error"){
+				alert("保存失败，可能已存在改登录名。");
+			}else{
 				$('#light').css("display","none");
 				$('#fade').css("display","none");
-				alert("保存成功。");
+				alert(data);
 				$('#reportTable').bootstrapTable('refresh');
-			}else{
-				alert("保存失败，可能已存在改登录名。");
 			}
 		},
 		error : function(data, status) {
@@ -279,6 +281,8 @@ function newUser(){
 	$('#id').val("");
 	$('#name').val("");
 	$('#username').val("");
+	$('#username').removeAttr("disabled");
+	
 	$('#password').val("");
 	$('#state').val("");
 	$('#light').css("display","block");
