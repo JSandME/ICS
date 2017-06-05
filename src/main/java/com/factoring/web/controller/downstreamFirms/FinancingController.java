@@ -218,7 +218,8 @@ public class FinancingController {
 			model.setAppAmt(financingApply.getAppAmt());
 			model.setPayedCorpus("0");
 			model.setUnpayCorpus(financingApply.getAppAmt());
-			model.setRepayAccrual(String.valueOf(Double.valueOf(financingApply.getRate()) * 0.0001 * Double.valueOf(financingApply.getAppAmt())));
+			model.setRepayAccrual(String.valueOf(Double.valueOf(financingApply.getRate()) * 0.0001 
+					* Double.valueOf(financingApply.getAppAmt()) * Double.valueOf(financingApply.getUseDate())));
 			model.setPayedAccrual("0");
 			model.setRate(financingApply.getRate());
 			model.setRepayState("0");
