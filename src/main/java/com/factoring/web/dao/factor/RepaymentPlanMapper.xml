@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.factoring.web.dao.factor.RepaymentPlanMapper">
+    <resultMap id="BaseResultMap" type="com.factoring.web.model.factor.RepaymentPlan">
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="username" property="username" jdbcType="VARCHAR" />
+        <result column="app_id" property="appId" jdbcType="VARCHAR" />
+        <result column="begin_date" property="beginDate" jdbcType="VARCHAR" />
+        <result column="end_date" property="endDate" jdbcType="VARCHAR" />
+        <result column="app_amt" property="appAmt" jdbcType="DOUBLE" />
+        <result column="payed_corpus" property="payed_corpus" jdbcType="DOUBLE" />
+        <result column="unpay_corpus" property="unpayCorpus" jdbcType="DOUBLE" />
+        <result column="repay_accrual" property="repayAccrual" jdbcType="DOUBLE" />
+        <result column="payed_accrual" property="payedAccrual" jdbcType="DOUBLE" />
+        <result column="rate" property="rate" jdbcType="DOUBLE" />
+        <result column="repay_state" property="repayState" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+        <result column="creator_id" property="creatorId" jdbcType="VARCHAR" />
+        <result column="modified_time" property="modifiedTime" jdbcType="VARCHAR" />
+        <result column="modifier_id" property="modifierId" jdbcType="VARCHAR" />
+        <result column="record_state" property="recordState" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, username, app_id, begin_date, end_date, payed_corpus, unpay_corpus, repay_accrual, payed_accrual, rate, repay_state, create_time, creator_id, modified_time, modifier_id, record_state
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from repayment_plan
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from repayment_plan
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.factoring.web.model.factor.RepaymentPlan">
+        insert into 
+        	repayment_plan 
+        	(id, username, app_id, begin_date, end_date, payed_corpus, unpay_corpus, repay_accrual, payed_accrual, rate, repay_state, create_time, creator_id, modified_time, modifier_id, record_state)
+        values 
+        	(#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{appId,jdbcType=VARCHAR}, #{beginDate,jdbcType=VARCHAR},
+        		#{endDate,jdbcType=VARCHAR}, #{payedCorpus,jdbcType=DOUBLE}, #{unpayCorpus,jdbcType=DOUBLE}, #{repayAccrual,jdbcType=DOUBLE},
+        		#{payedAccrual,jdbcType=DOUBLE}, #{rate,jdbcType=DOUBLE}, #{repayState,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+        		#{creatorId,jdbcType=VARCHAR},#{modifiedTime,jdbcType=VARCHAR}, #{modifierId,jdbcType=VARCHAR}, #{recordState,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.factoring.web.model.factor.RepaymentPlan">
+        insert into repayment_plan
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,
+            <if test="username != null">username,</if>
+            <if test="appId != null">app_id,</if>
+            <if test="beginDate != null">begin_date,</if>
+            <if test="endDate != null">end_date,</if>
+            <if test="payedCorpus != null">payed_corpus,</if>
+            <if test="unpayCorpus != null">unpay_corpus,</if>
+            <if test="repayAccrual != null">repay_accrual,</if>
+            <if test="payedAccrual != null">payed_accrual,</if>
+            <if test="rate != null">rate,</if>
+            <if test="repayState != null">repay_state,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="creatorId != null">creator_id,</if>
+            <if test="modifiedTime != null">modified_time,</if>
+            <if test="modifierId != null">modifier_id,</if>
+            <if test="recordState != null">record_state,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                newUUID(),
+            <if test="username != null">#{username,jdbcType=VARCHAR},</if>
+            <if test="appId != null">#{appId,jdbcType=VARCHAR},</if>
+            <if test="beginDate != null">#{beginDate,jdbcType=VARCHAR},</if>
+            <if test="endDate != null">#{endDate,jdbcType=VARCHAR},</if>
+            <if test="payedCorpus != null">#{payedCorpus,jdbcType=DOUBLE},</if>
+            <if test="unpayCorpus != null">#{unpayCorpus,jdbcType=DOUBLE},</if>
+            <if test="repayAccrual != null">#{repayAccrual,jdbcType=DOUBLE},</if>
+            <if test="payedAccrual != null">#{payedAccrual,jdbcType=DOUBLE},</if>
+            <if test="rate != null">#{rate,jdbcType=DOUBLE},</if>
+            <if test="repayState != null">#{repayState,jdbcType=VARCHAR},</if>
+            <if test="createTime != null">#{createTime,jdbcType=VARCHAR},</if>
+            <if test="creatorId != null">#{creatorId,jdbcType=VARCHAR},</if>
+            <if test="modifiedTime != null">#{modifiedTime,jdbcType=VARCHAR},</if>
+            <if test="modifierId != null">#{modifierId,jdbcType=VARCHAR},</if>
+            <if test="recordState != null">#{recordState,jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.factoring.web.model.factor.RepaymentPlan">
+        update repayment_plan
+        <set>
+            <if test="username != null">username = #{username,jdbcType=VARCHAR},</if>
+            <if test="appId != null">app_id = #{appId,jdbcType=VARCHAR},</if>
+            <if test="beginDate != null">begin_date = #{beginDate,jdbcType=VARCHAR},</if>
+            <if test="endDate != null">end_date = #{endDate,jdbcType=VARCHAR},</if>
+            <if test="payedCorpus != null">payed_corpus = #{payedCorpus,jdbcType=DOUBLE},</if>
+            <if test="unpayCorpus != null">unpay_corpus = #{unpayCorpus,jdbcType=DOUBLE},</if>
+            <if test="repayAccrual != null">repay_accrual = #{repayAccrual,jdbcType=DOUBLE},</if>
+            <if test="payedAccrual != null">payed_accrual = #{payedAccrual,jdbcType=DOUBLE},</if>
+            <if test="rate != null">rate = #{rate,jdbcType=DOUBLE},</if>
+            <if test="repayState != null">repay_state = #{repayState,jdbcType=VARCHAR},</if>
+            <if test="modifiedTime != null">modified_time = #{modifiedTime,jdbcType=VARCHAR},</if>
+            <if test="modifierId != null">modifier_id = #{modifierId,jdbcType=VARCHAR},</if>
+            <if test="recordState != null">record_state = #{recordState,jdbcType=VARCHAR},</if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.factoring.web.model.factor.RepaymentPlan">
+        update
+        	repayment_plan
+        set 
+        	username = #{username,jdbcType=VARCHAR},
+        	app_id = #{appId,jdbcType=VARCHAR},
+        	begin_date = #{beginDate,jdbcType=VARCHAR},
+        	end_date = #{endDate,jdbcType=VARCHAR},
+        	payed_corpus = #{payedCorpus,jdbcType=DOUBLE},
+        	unpay_corpus = #{unpayCorpus,jdbcType=DOUBLE},
+        	repay_accrual = #{repayAccrual,jdbcType=DOUBLE},
+        	payed_accrual = #{payedAccrual,jdbcType=DOUBLE},
+        	rate = #{rate,jdbcType=DOUBLE},
+        	repay_state = #{repayState,jdbcType=VARCHAR},
+        	modified_time = #{modifiedTime,jdbcType=VARCHAR},
+        	modifier_id = #{modifierId,jdbcType=VARCHAR},
+        	record_state = #{recordState,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    
+    <select id="selectAllRepaymentPlan" resultMap="BaseResultMap" parameterType="map">
+    	SELECT * FROM repayment_plan where username=#{username} and  record_state='0' ORDER BY id
+    </select>
+    
+</mapper>

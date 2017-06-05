@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.factoring.web.dao.factor.RepaymentDetailMapper">
+    <resultMap id="BaseResultMap" type="com.factoring.web.model.factor.RepaymentDetail">
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="pan_id" property="panId" jdbcType="VARCHAR" />
+        <result column="repay_date" property="repayDate" jdbcType="VARCHAR" />
+        <result column="pay_corpus" property="payCorpus" jdbcType="DOUBLE" />
+        <result column="pay_accrual" property="payAccrual" jdbcType="DOUBLE" />
+        <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+        <result column="creator_id" property="creatorId" jdbcType="VARCHAR" />
+        <result column="modified_time" property="modifiedTime" jdbcType="VARCHAR" />
+        <result column="modifier_id" property="modifierId" jdbcType="VARCHAR" />
+        <result column="record_state" property="recordState" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, pan_id, repay_date, pay_corpus, pay_accrual, create_time, creator_id, modified_time, modifier_id, record_state
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from repayment_detail
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from repayment_detail
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.factoring.web.model.factor.RepaymentDetail">
+        insert into 
+        	repayment_detail 
+        	(id, pan_id, repay_date, pay_corpus, pay_accrual, create_time, creator_id, modified_time, modifier_id, record_state)
+        values 
+        	(#{id,jdbcType=VARCHAR}, #{panId,jdbcType=VARCHAR}, #{repayDate,jdbcType=VARCHAR}, #{payCorpus,jdbcType=DOUBLE},
+        		#{payAccrual,jdbcType=DOUBLE}, #{createTime,jdbcType=VARCHAR}, #{creatorId,jdbcType=VARCHAR},
+        		#{modifiedTime,jdbcType=VARCHAR}, #{modifierId,jdbcType=VARCHAR}, #{recordState,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.factoring.web.model.factor.RepaymentDetail">
+        insert into repayment_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,
+            <if test="panId != null">pan_id,</if>
+            <if test="repayDate != null">repay_date,</if>
+            <if test="payCorpus != null">pay_corpus,</if>
+            <if test="payAccrual != null">pay_accrual,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="creatorId != null">creator_id,</if>
+            <if test="modifiedTime != null">modified_time,</if>
+            <if test="modifierId != null">modifier_id,</if>
+            <if test="recordState != null">record_state,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                newUUID(),
+            <if test="panId != null">#{panId,jdbcType=VARCHAR},</if>
+            <if test="repayDate != null">#{repayDate,jdbcType=VARCHAR},</if>
+            <if test="payCorpus != null">#{payCorpus,jdbcType=DOUBLE},</if>
+            <if test="payAccrual != null">#{payAccrual,jdbcType=DOUBLE},</if>
+            <if test="createTime != null">#{createTime,jdbcType=VARCHAR},</if>
+            <if test="creatorId != null">#{creatorId,jdbcType=VARCHAR},</if>
+            <if test="modifiedTime != null">#{modifiedTime,jdbcType=VARCHAR},</if>
+            <if test="modifierId != null">#{modifierId,jdbcType=VARCHAR},</if>
+            <if test="recordState != null">#{recordState,jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.factoring.web.model.factor.RepaymentDetail">
+        update repayment_detail
+        <set>
+            <if test="panId != null">pan_id = #{panId,jdbcType=VARCHAR},</if>
+            <if test="repayDate != null">repay_date = #{repayDate,jdbcType=VARCHAR},</if>
+            <if test="payCorpus != null">pay_corpus = #{payCorpus,jdbcType=DOUBLE},</if>
+            <if test="payAccrual != null">pay_accrual = #{payAccrual,jdbcType=DOUBLE},</if>
+            <if test="modifiedTime != null">modified_time = #{modifiedTime,jdbcType=VARCHAR},</if>
+            <if test="modifierId != null">modifier_id = #{modifierId,jdbcType=VARCHAR},</if>
+            <if test="recordState != null">record_state = #{recordState,jdbcType=VARCHAR},</if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.factoring.web.model.factor.RepaymentDetail">
+        update
+        	repayment_detail
+        set 
+        	pan_id = #{panId,jdbcType=VARCHAR},
+        	repay_date = #{repayDate,jdbcType=VARCHAR},
+        	pay_corpus = #{payCorpus,jdbcType=DOUBLE},
+        	pay_accrual = #{payAccrual,jdbcType=DOUBLE},
+        	modified_time = #{modifiedTime,jdbcType=VARCHAR},
+        	modifier_id = #{modifierId,jdbcType=VARCHAR},
+        	record_state = #{recordState,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    
+    <select id="selectAllRepaymentDetail" resultMap="BaseResultMap" parameterType="map">
+    	SELECT * FROM repayment_detail where pan_id=#{panId} and  record_state='0' ORDER BY id
+    </select>
+    
+</mapper>

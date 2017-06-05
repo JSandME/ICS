@@ -1,5 +1,9 @@
 package com.factoring.web.controller.downstreamFirms;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,10 +25,12 @@ import com.factoring.core.util.JsonUtil;
 import com.factoring.web.model.downstreamFirms.Credit;
 import com.factoring.web.model.downstreamFirms.FinancingApply;
 import com.factoring.web.model.factor.Product;
+import com.factoring.web.model.factor.RepaymentPlan;
 import com.factoring.web.security.RoleSign;
 import com.factoring.web.service.downstreamFirms.CreditService;
 import com.factoring.web.service.downstreamFirms.FinancingApplyService;
 import com.factoring.web.service.factor.ProductService;
+import com.factoring.web.service.factor.RepaymentPlanService;
 
 @Controller
 @RequestMapping("/downstreamFirms")
@@ -40,6 +46,9 @@ public class FinancingController {
 	
 	@Resource
 	private FinancingApplyService financingApplyService;
+	
+	@Resource
+	private RepaymentPlanService repaymentPlanService;
 
 	/**
 	 * 访问页面
@@ -193,6 +202,23 @@ public class FinancingController {
 		
 		int i = financingApplyService.updateByPrimaryKeySelective(financingApply);
 		if(i != 0){
+			financingApply = financingApplyService.selectByPrimaryKey(financingApply.getId());
+			
+			Date date = new Date();//取时间 
+		    Calendar calendar = new GregorianCalendar(); 
+		    calendar.setTime(date); 
+		    calendar.add(calendar.DATE,Integer.valueOf(financingApply.getUseDate()));//把日期往后增加一天.整数往后推,负数往前移动 
+		    date=calendar.getTime();   //这个时间就是日期往后推一天的结果 
+			
+			RepaymentPlan model = new RepaymentPlan();
+			model.setUsername(username);
+			model.setAppId(financingApply.getId());
+			model.setBeginDate(ApplicationUtils.getCurrentDate());
+			model.setEndDate((new SimpleDateFormat("yyyy-MM-dd")).format(date));
+			model.setAppAmt(financingApply.getAppAmt());
+			
+			
+			repaymentPlanService.insert(model);
 			return "";
 		}
 		return "error";
@@ -220,4 +246,15 @@ public class FinancingController {
 		
 		return record;
 	}
+	
+	public static void main(String[] args) {
+		Date date = new Date();//取时间 
+	    Calendar calendar = new GregorianCalendar(); 
+	    calendar.setTime(date); 
+	    calendar.add(calendar.DATE,60);//把日期往后增加一天.整数往后推,负数往前移动 
+	    date=calendar.getTime();   //这个时间就是日期往后推一天的结果 
+	    
+	    System.out.println((new SimpleDateFormat("yyyy-MM-dd")).format(date));
+	}
+
 }
