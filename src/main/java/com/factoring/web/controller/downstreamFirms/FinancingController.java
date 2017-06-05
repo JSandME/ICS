@@ -143,6 +143,15 @@ public class FinancingController {
 	}
 	
 	/**
+	 * 申请信息页
+	 * @return
+	 */
+	@RequestMapping(value = "/applyInfoPageByFactor")
+	public String applyInfoPageByFactor(){
+		return "factor/applyFinancingInfo";
+	}
+	
+	/**
 	 * 获取申请信息
 	 * @return
 	 */
@@ -172,13 +181,13 @@ public class FinancingController {
 	@RequestMapping(value = "/getApproveInfo")
 	@ResponseBody
 	@RequiresRoles(value= {RoleSign.FACTOR})
-	public String getApproveInfo(){
+	public String getApproveInfo(String state){
 		Subject subject = SecurityUtils.getSubject();
 		String username = String.valueOf(subject.getPrincipal());
 		
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("username", username);
-		map.put("state", "0");
+		map.put("state", state);
 		
 		List<FinancingApply> dataList = financingApplyService.selectFinancingApplyByState(map);
 		return JsonUtil.dataListToJson(dataList);

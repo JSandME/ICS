@@ -1,7 +1,7 @@
 $(function() {
-	var approveApply = function() {
+	var ApplyInfo = function() {
 
-		var handleApproveApplyTable = function() {
+		var handleApplyInfoTable = function() {
 			
 			$(function() {
 				var url = "rest/downstreamFirms/getApproveInfo";
@@ -28,7 +28,7 @@ $(function() {
 					responseHandler: responseHandler,
 					//sidePagination: "server", //服务端处理分页
 					queryParams : function(param) {
-						return {state:'0'};
+						return {};
 					},
 					columns : [ {
 						checkbox : true
@@ -50,15 +50,6 @@ $(function() {
 					}, {
 						field : "state",
 						title : "流程状态 ",
-					},{
-	                	title: '操作',
-	                	field: 'id',
-	                	align: 'center',
-	                	formatter:function(value,row,index){  
-	                	var e = '<a href="#" mce_href="#" onclick="approve(\''+ row.id + '\');$(\'.rerefresh\').click()">通过</a> ';  
-	                	var d = '<a href="#" mce_href="#" onclick="unapprove(\''+ row.id + '\');$(\'.rerefresh\').click()">否决</a> ';
-	                        return e+d;  
-	                    }
 					}],
 				});
 				$("#reportTable tr th").css("background-color", "#ddd"); //改变table表头背景色 
@@ -88,59 +79,33 @@ $(function() {
 					return res;
 				}
 				
+				$('#reportTable').on('check.bs.table uncheck.bs.table ' +
+		                'check-all.bs.table uncheck-all.bs.table', function () {
+		            $('#remove').prop('disabled', !$('#reportTable').bootstrapTable('getSelections').length);
+
+		            selections = getIdSelections();
+		        });
+				
+				$('#remove').click(function () {
+		            var ids = getIdSelections();
+		            /*$('#reportTable').bootstrapTable('remove', {
+		                field: 'id',
+		                values: ids
+		            });*/
+		            $('#remove').prop('disabled', true);
+		        });
+				
 			});
 			
 		};
 
 		return {
 			init : function() {
-				handleApproveApplyTable();
+				handleApplyInfoTable();
 			}
 
 		};
 	}();
-	approveApply.init();
+	ApplyInfo.init();
 	
 });
-
-function unapprove(id){
-	$.ajax({
-		type : 'post',
-		url : "rest/downstreamFirms/approve",
-		async : false,
-		data : { id : id, state : "9"},
-		cache : false,
-		success : function(data ,status){
-			if(data != "error"){
-				alert("成功,否决该申请。");
-			}else{
-				alert("处理出错。");
-			}
-			$('#reportTable').bootstrapTable('refresh');
-		},
-		error : function(data, status) {
-			alert("请求失败。");
-		},
-	});
-}
-
-function approve(id){
-	$.ajax({
-		type : 'post',
-		url : "rest/downstreamFirms/approve",
-		async : true,
-		data : { id : id, state : "1"},
-		cache : false,
-		success : function(data ,status){
-			if(data != "error"){
-				alert("成功,审批通过。");
-			}else{
-				alert("处理出错。");
-			}
-			$('#reportTable').bootstrapTable('refresh');
-		},
-		error : function(data, status) {
-			alert("请求失败。");
-		},
-	});
-}

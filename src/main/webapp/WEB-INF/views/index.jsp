@@ -121,26 +121,35 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	                                <span class="arrow "> </span>
 	                            </a>
 	                            <ul class="sub-menu">
-	                                <li>
-	                                    <a href="rest/product/page">
-											金融产品管理
-	                                    </a>
-	                                </li>
-	                                <li>
-	                                    <a href="rest/downstreamFirms/approvePage">
-											融资审批
-	                                    </a>
-	                                </li>
-	                                <li>
-	                                    <a href="rest/downstreamFirms/page">
-											申请融资
-	                                    </a>
-	                                </li>
-	                                <li>
-	                                    <a href="rest/downstreamFirms/applyInfoPage">
-											融资申请信息
-	                                    </a>
-	                                </li>
+		                            <shiro:hasAnyRoles name="admin,factor">
+		                                <li>
+		                                    <a href="rest/product/page">
+												金融产品管理
+		                                    </a>
+		                                </li>
+		                                <li>
+		                                    <a href="rest/downstreamFirms/approvePage">
+												融资审批
+		                                    </a>
+		                                </li>
+		                                <li>
+		                                    <a href="rest/downstreamFirms/applyInfoPageByFactor">
+												融资申请信息
+		                                    </a>
+		                                </li>
+	                                </shiro:hasAnyRoles>
+	                                <shiro:hasAnyRoles name="admin,downstream_firms">
+		                                <li>
+		                                    <a href="rest/downstreamFirms/page">
+												申请融资
+		                                    </a>
+		                                </li>
+		                                <li>
+		                                    <a href="rest/downstreamFirms/applyInfoPage">
+												融资申请信息
+		                                    </a>
+		                                </li>
+                                	</shiro:hasAnyRoles>
 	                            </ul>
 	                    </li>
 	                    </shiro:hasAnyRoles>
