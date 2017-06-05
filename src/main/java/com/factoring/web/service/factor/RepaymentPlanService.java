@@ -46,5 +46,5 @@ public interface RepaymentPlanService extends GenericService<RepaymentPlan, Stri
      * @param record
      * @return
      */
-    RepaymentDetail selectByPrimaryKey(String id);
+    RepaymentPlan selectByPrimaryKey(String id);
 }

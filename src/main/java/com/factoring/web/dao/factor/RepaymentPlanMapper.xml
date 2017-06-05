@@ -36,10 +36,10 @@
     <insert id="insert" parameterType="com.factoring.web.model.factor.RepaymentPlan">
         insert into 
         	repayment_plan 
-        	(id, username, app_id, begin_date, end_date, payed_corpus, unpay_corpus, repay_accrual, payed_accrual, rate, repay_state, create_time, creator_id, modified_time, modifier_id, record_state)
+        	(id, username, app_id, begin_date, end_date, app_amt, payed_corpus, unpay_corpus, repay_accrual, payed_accrual, rate, repay_state, create_time, creator_id, modified_time, modifier_id, record_state)
         values 
         	(#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{appId,jdbcType=VARCHAR}, #{beginDate,jdbcType=VARCHAR},
-        		#{endDate,jdbcType=VARCHAR}, #{payedCorpus,jdbcType=DOUBLE}, #{unpayCorpus,jdbcType=DOUBLE}, #{repayAccrual,jdbcType=DOUBLE},
+        		#{endDate,jdbcType=VARCHAR}, #{appAmt,jdbcType=DOUBLE}, #{payedCorpus,jdbcType=DOUBLE}, #{unpayCorpus,jdbcType=DOUBLE}, #{repayAccrual,jdbcType=DOUBLE},
         		#{payedAccrual,jdbcType=DOUBLE}, #{rate,jdbcType=DOUBLE}, #{repayState,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
         		#{creatorId,jdbcType=VARCHAR},#{modifiedTime,jdbcType=VARCHAR}, #{modifierId,jdbcType=VARCHAR}, #{recordState,jdbcType=VARCHAR})
     </insert>
@@ -51,6 +51,7 @@
             <if test="appId != null">app_id,</if>
             <if test="beginDate != null">begin_date,</if>
             <if test="endDate != null">end_date,</if>
+            <if test="appAmt != null">app_amt,</if>
             <if test="payedCorpus != null">payed_corpus,</if>
             <if test="unpayCorpus != null">unpay_corpus,</if>
             <if test="repayAccrual != null">repay_accrual,</if>
@@ -69,6 +70,7 @@
             <if test="appId != null">#{appId,jdbcType=VARCHAR},</if>
             <if test="beginDate != null">#{beginDate,jdbcType=VARCHAR},</if>
             <if test="endDate != null">#{endDate,jdbcType=VARCHAR},</if>
+            <if test="appAmt != null">#{appAmt,jdbcType=DOUBLE},</if>
             <if test="payedCorpus != null">#{payedCorpus,jdbcType=DOUBLE},</if>
             <if test="unpayCorpus != null">#{unpayCorpus,jdbcType=DOUBLE},</if>
             <if test="repayAccrual != null">#{repayAccrual,jdbcType=DOUBLE},</if>
@@ -89,6 +91,7 @@
             <if test="appId != null">app_id = #{appId,jdbcType=VARCHAR},</if>
             <if test="beginDate != null">begin_date = #{beginDate,jdbcType=VARCHAR},</if>
             <if test="endDate != null">end_date = #{endDate,jdbcType=VARCHAR},</if>
+            <if test="appAmt != null">app_amt = #{appAmt,jdbcType=DOUBLE},</if>
             <if test="payedCorpus != null">payed_corpus = #{payedCorpus,jdbcType=DOUBLE},</if>
             <if test="unpayCorpus != null">unpay_corpus = #{unpayCorpus,jdbcType=DOUBLE},</if>
             <if test="repayAccrual != null">repay_accrual = #{repayAccrual,jdbcType=DOUBLE},</if>
@@ -109,6 +112,7 @@
         	app_id = #{appId,jdbcType=VARCHAR},
         	begin_date = #{beginDate,jdbcType=VARCHAR},
         	end_date = #{endDate,jdbcType=VARCHAR},
+        	app_amt = #{appAmt,jdbcType=DOUBLE},
         	payed_corpus = #{payedCorpus,jdbcType=DOUBLE},
         	unpay_corpus = #{unpayCorpus,jdbcType=DOUBLE},
         	repay_accrual = #{repayAccrual,jdbcType=DOUBLE},

@@ -2,58 +2,50 @@ package com.factoring.web.service.factor.impl;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 
 import com.factoring.core.generic.GenericDao;
 import com.factoring.core.generic.GenericServiceImpl;
-import com.factoring.web.model.factor.RepaymentDetail;
+import com.factoring.web.dao.factor.RepaymentPlanMapper;
 import com.factoring.web.model.factor.RepaymentPlan;
 import com.factoring.web.service.factor.RepaymentPlanService;
 
 @Service
 public class RepaymentPlanServiceImpl extends GenericServiceImpl<RepaymentPlan, String> implements RepaymentPlanService {
 
-
-	@Override
-	public List<RepaymentPlan> selectList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	@Resource
+	private RepaymentPlanMapper repaymentPlanMapper;
 
 	@Override
 	public int insertSelective(RepaymentPlan repaymentPlan) {
-		// TODO Auto-generated method stub
-		return 0;
+		return repaymentPlanMapper.insertSelective(repaymentPlan);
 	}
 
 	@Override
 	public List<RepaymentPlan> selectAllRepaymentPlan(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		return repaymentPlanMapper.selectAllRepaymentPlan(username);
 	}
 
 	@Override
 	public int updateByPrimaryKeySelective(RepaymentPlan record) {
-		// TODO Auto-generated method stub
-		return 0;
+		return repaymentPlanMapper.updateByPrimaryKeySelective(record);
 	}
 
 	@Override
 	public int deleteByPrimaryKey(String id) {
-		// TODO Auto-generated method stub
-		return 0;
+		return repaymentPlanMapper.deleteByPrimaryKey(id);
 	}
 
 	@Override
-	public RepaymentDetail selectByPrimaryKey(String id) {
-		// TODO Auto-generated method stub
-		return null;
+	public RepaymentPlan selectByPrimaryKey(String id) {
+		return repaymentPlanMapper.selectByPrimaryKey(id);
 	}
 
 	@Override
 	public GenericDao<RepaymentPlan, String> getDao() {
-		// TODO Auto-generated method stub
-		return null;
+		return repaymentPlanMapper;
 	}
 
 }

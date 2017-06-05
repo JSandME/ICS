@@ -216,9 +216,18 @@ public class FinancingController {
 			model.setBeginDate(ApplicationUtils.getCurrentDate());
 			model.setEndDate((new SimpleDateFormat("yyyy-MM-dd")).format(date));
 			model.setAppAmt(financingApply.getAppAmt());
-			
-			
-			repaymentPlanService.insert(model);
+			model.setPayedCorpus("0");
+			model.setUnpayCorpus(financingApply.getAppAmt());
+			model.setRepayAccrual(String.valueOf(Double.valueOf(financingApply.getRate()) * 0.0001 * Double.valueOf(financingApply.getAppAmt())));
+			model.setPayedAccrual("0");
+			model.setRate(financingApply.getRate());
+			model.setRepayState("0");
+			model.setCreateTime(time);
+			model.setCreatorId(username);
+			model.setModifiedTime(time);
+			model.setModifierId(username);
+			model.setRecordState("0");
+			repaymentPlanService.insertSelective(model);
 			return "";
 		}
 		return "error";
