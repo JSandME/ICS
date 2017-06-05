@@ -25,4 +25,6 @@ public interface RepaymentPlanMapper extends GenericDao<RepaymentPlan, String> {
     
     int updateByPrimaryKeySelective(RepaymentPlan record);
     
+    List selectRepaymentPlanByState(String username);
+    
 }

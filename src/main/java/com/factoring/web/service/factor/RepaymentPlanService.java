@@ -47,4 +47,6 @@ public interface RepaymentPlanService extends GenericService<RepaymentPlan, Stri
      * @return
      */
     RepaymentPlan selectByPrimaryKey(String id);
+    
+    List selectRepaymentPlanByState(String username);
 }

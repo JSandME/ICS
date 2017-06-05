@@ -4,7 +4,7 @@ $(function() {
 		var handlePermissionTable = function() {
 			
 			$(function() {
-				var url = "rest/product/getDate";
+				var url = "rest/repaymentPlan/getRepaymentPlanbyUserName";
 				$("#reportTable").bootstrapTable({
 					url : url,
 					dataType:"JSON", 	//返回JSON格式数据
@@ -33,93 +33,36 @@ $(function() {
 					columns : [ {
 						checkbox : true
 					}, {
-						field : "productName",
-						title : "产品名称",
-						editable : {
-							type : 'text',
-							title : '产品名称',
-							validate : function(v) {
-								if (!v)
-									return '产品名称不能为空';
-							}
-						}
+						field : "name",
+						title : "借款人",
 					}, {
-						field : "minAmt",
-						title : "最小金额",
-						editable : {
-							type : 'text',
-							title : '最小金额',
-							validate : function(v) {
-								if (!v)
-									return '最小金额不能为空';
-							}
-						}
+						field : "begin_date",
+						title : "起始日期",
 					}, {
-						field : "maxAmt",
-						title : "最大金额",
-						editable : {
-							type : 'text',
-							title : '最大金额',
-							validate : function(v) {
-								if (!v)
-									return '最大金额不能为空';
-							}
-						}
+						field : "end_date",
+						title : "到期日期",
 					},{
+						field : "app_amt",
+						title : "贷款金额",
+					}, {
+						field : "payed_corpus",
+						title : "已偿还本金",
+					}, {
+						field : "unpay_corpus",
+						title : "未偿还本金",
+					}, {
+						field : "repay_accrual",
+						title : "预期利息",
+					}, {
+						field : "payed_accrual",
+						title : "已回收利息",
+					}, {
 						field : "rate",
-						title : "日利率(‱) ",
-						editable : {
-							type : 'text',
-							title : '日利率(‱) ',
-							validate : function(v) {
-								if (!v)
-									return '日利率不能为空';
-							}
-						}
+						title : "日利率",
 					}, {
-						field : "useDate",
-						title : "最长用款期限（天） ",
-						editable : {
-							type : 'text',
-							title : '最长用款期限（天）  ',
-							validate : function(v) {
-								if (!v)
-									return '最长用款期限不能为空';
-							}
-						}
-					},{
-	                	title: '操作',
-	                	field: 'id',
-	                	align: 'center',
-	                	formatter:function(value,row,index){  
-	                	var e = '<a href="#" mce_href="#" onclick="editRow(\''+ row.id + '\')">编辑</a> ';  
-	                	var d = '<a href="#" mce_href="#" onclick="delRow(\''+ row.id + '\');$(\'.rerefresh\').click()">删除</a> ';
-	                        return e+d;  
-	                    }
+						field : "repay_state",
+						title : "还款状态",
 					}],
-					onEditableSave : function(field, row, oldValue, $el) {
-						$("#reportTable").bootstrapTable("resetView");
-						$.ajax({
-							type : "post",
-							url : "rest/product/updateProduct",
-							data : row,
-							dataType : 'JSON',
-							success : function(data, status) {
-								if(status == "success"){
-									alert("更新成功。");
-									$('#reportTable').bootstrapTable('refresh');
-								}
-							},
-							error : function(data, status) {
-								alert(status);
-								alert("更新失败。");
-							},
-							complete : function() {
-
-							}
-
-						});
-					}
 				});
 				$("#reportTable tr th").css("background-color", "#ddd"); //改变table表头背景色 
 				$("#reportTable tr th").css("color", "#000000");//改变table表头字体颜色	
@@ -128,6 +71,23 @@ $(function() {
 				//set进table之前进行数据处理
 				function responseHandler(res)
 				{
+					$.each(res, function(index, element){
+						switch (res[index].repay_state) {
+						case "0":
+							res[index].repay_state = "未还清";
+							break;
+						case "1":
+							res[index].repay_state = "已结清";
+							break;
+						case "2":
+							res[index].repay_state = "已逾期";
+							break;
+
+						default:
+							res[index].repay_state = "未知状态";
+							break;
+						}
+					});
 					return res;
 				}
 				
@@ -161,43 +121,6 @@ $(function() {
 	Permission.init();
 	
 });
-
-function delRow(id){
-	$.ajax({
-		type : 'post',
-		url : "rest/product/deleteProduct",
-		async : false,
-		data : { id : id},
-		cache : false,
-		success : function(data ,status){
-			alert("删除成功。");
-			$('#reportTable').bootstrapTable('refresh');
-		},
-		error : function(data, status) {
-			alert("删除失败。");
-		},
-	});
-}
-
-function editRow(id){
-	$.ajax({
-		type : 'post',
-		url : "rest/product/getProduct",
-		async : true,
-		data : { id : id},
-		cache : false,
-		success : function(data ,status){
-			$('#id').val(data.id);
-			$('#productName').val(data.productName);
-			$('#minAmt').val(data.minAmt);
-			$('#maxAmt').val(data.maxAmt);
-			$('#rate').val(data.rate);
-			$('#useDate').val(data.useDate);
-		}
-	});
-	$('#light').css("display","block");
-	$('#fade').css("display","block");
-}
 
 function save(){
 	var id = $('#id').val();
@@ -243,13 +166,11 @@ function save(){
 	});
 }
 
-function newRow(){
+function newRole(){
 	$('#id').val("");
-	$('#productName').val("");
-	$('#minAmt').val("");
-	$('#maxAmt').val("");
-	$('#rate').val("");
-	$('#useDate').val("");
+	$('#roleName').val("");
+	$('#roleSign').val("");
+	$('#description').val("");
 	$('#light').css("display","block");
 	$('#fade').css("display","block");
 }

@@ -48,4 +48,9 @@ public class RepaymentPlanServiceImpl extends GenericServiceImpl<RepaymentPlan, 
 		return repaymentPlanMapper;
 	}
 
+	@Override
+	public List selectRepaymentPlanByState(String username) {
+		return repaymentPlanMapper.selectRepaymentPlanByState(username);
+	}
+
 }

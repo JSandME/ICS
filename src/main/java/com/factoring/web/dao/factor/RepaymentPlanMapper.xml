@@ -129,4 +129,18 @@
     	SELECT * FROM repayment_plan where username=#{username} and  record_state='0' ORDER BY id
     </select>
     
+    <select id="selectRepaymentPlanByState" resultType="map" parameterType="map">
+    	SELECT
+			`user`.`name`,plan.*
+		FROM
+			repayment_plan plan,
+			financing_apply apply,
+			`user`
+		WHERE
+			plan.username = #{username}
+		AND plan.record_state = '0'
+		AND plan.app_id = apply.id
+		AND apply.username = `user`.username
+    </select>
+    
 </mapper>

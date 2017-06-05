@@ -137,6 +137,11 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 												融资申请信息
 		                                    </a>
 		                                </li>
+		                                 <li>
+		                                    <a href="rest/repaymentPlan/page">
+												还款情况
+		                                    </a>
+		                                </li>
 	                                </shiro:hasAnyRoles>
 	                                <shiro:hasAnyRoles name="admin,downstream_firms">
 		                                <li>

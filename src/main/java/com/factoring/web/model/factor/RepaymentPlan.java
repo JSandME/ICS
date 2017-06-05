@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
  **/
 public class RepaymentPlan {
     private String id;
+    private String name;
     private String username;
     private String appId;
     private String beginDate;
@@ -37,6 +38,14 @@ public class RepaymentPlan {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getUsername() {
