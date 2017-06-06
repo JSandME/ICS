@@ -8,7 +8,7 @@
         <result column="begin_date" property="beginDate" jdbcType="VARCHAR" />
         <result column="end_date" property="endDate" jdbcType="VARCHAR" />
         <result column="app_amt" property="appAmt" jdbcType="DOUBLE" />
-        <result column="payed_corpus" property="payed_corpus" jdbcType="DOUBLE" />
+        <result column="payed_corpus" property="payedCorpus" jdbcType="DOUBLE" />
         <result column="unpay_corpus" property="unpayCorpus" jdbcType="DOUBLE" />
         <result column="repay_accrual" property="repayAccrual" jdbcType="DOUBLE" />
         <result column="payed_accrual" property="payedAccrual" jdbcType="DOUBLE" />

@@ -19,7 +19,7 @@ public interface RepaymentDetailService extends GenericService<RepaymentDetail, 
      * @param record
      * @return
      */
-    int insertSelective(RepaymentDetail product);
+    int insertSelective(RepaymentDetail detail);
 
     /**
      * 查询所有的

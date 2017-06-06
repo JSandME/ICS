@@ -91,21 +91,69 @@ $(function() {
 					return res;
 				}
 				
+				$('#pay').change(function(){
+					var row = getIdSelections();
+		            row = row[0];
+		            $('#pan_id').val(row.id);
+		            var d1 = new Date((row.begin_date).replace(/\-/g, "\/"));  
+		            var now = new Date();
+		            var days = now.getTime() - d1.getTime(); 
+		            var day = parseInt(days / (1000 * 60 * 60 * 24)); 
+		            
+		            var pay_accrual = day * row.app_amt * row.rate * 0.0001;
+		            var pay_corpus = $('#pay').val() - pay_accrual;
+		            if(pay_corpus + row.payed_accrual < 0){
+		            	pay_accrual = 0;
+		            	pay_corpus = $('#pay').val();
+		            }
+		            
+		            $('#pay_corpus').val(pay_corpus);
+		            $('#pay_accrual').val(pay_accrual);
+		            
+				});
+				
 				$('#reportTable').on('check.bs.table uncheck.bs.table ' +
 		                'check-all.bs.table uncheck-all.bs.table', function () {
-		            $('#remove').prop('disabled', !$('#reportTable').bootstrapTable('getSelections').length);
+					row = getIdSelections();
+					row = row[0];
+					if(typeof(row) == "undefined"){
+						return ;
+					}
+					if(row.repay_state == "未还清"){
+						$('#repayment').prop('disabled', !$('#reportTable').bootstrapTable('getSelections').length);
+					}
+					
+					if(row.repay_state == "已逾期"){
+						
+						var d1 = new Date((row.end_date).replace(/\-/g, "\/"));  
+			            var now = new Date();
+			            if(d1 < now){
+			            	$('#overDue').prop('disabled', !$('#reportTable').bootstrapTable('getSelections').length);
+			            }
+					}
 
-		            selections = getIdSelections();
 		        });
 				
-				$('#remove').click(function () {
-		            var ids = getIdSelections();
+				$('#repayment').click(function () {
+		            var row = getIdSelections();
 		            /*$('#reportTable').bootstrapTable('remove', {
 		                field: 'id',
 		                values: ids
 		            });*/
-		            $('#remove').prop('disabled', true);
+		            $('#pan_id').val("");
+		        	$('#pay').val("");
+		        	$('#pay_corpus').val("");
+		        	$('#pay_accrual').val("");
+		            $('#light').css("display","block");
+		        	$('#fade').css("display","block");
+		            
+		            $('#repayment').prop('disabled', true);
 		        });
+				
+				$('#overDue').click(function () {
+					
+					 $('#overDue').prop('disabled', true);
+				});
 				
 			});
 			
@@ -123,30 +171,23 @@ $(function() {
 });
 
 function save(){
-	var id = $('#id').val();
-	var productName = $('#productName').val();
-	var minAmt = $('#minAmt').val();
-	var maxAmt = $('#maxAmt').val();
-	var rate = $('#rate').val();
-	var useDate = $('#useDate').val();
+	var pan_id = $('#pan_id').val();
+	var pay = $('#pay').val();
+	var pay_corpus = $('#pay_corpus').val();
+	var pay_accrual = $('#pay_accrual').val();
 	
 	var datasource ={};
-	datasource.id = id;
-	datasource.productName = productName;
-	datasource.minAmt = minAmt;
-	datasource.maxAmt = maxAmt;
-	datasource.rate = rate;
-	datasource.useDate = useDate;
+	datasource.panId = pan_id;
+	datasource.payCorpus = pay_corpus;
+	datasource.payAccrual = pay_accrual;
 	
-	
-	if(productName == "" || minAmt == "" || maxAmt == "" || rate == "" || useDate == ""){
+	if(pay == ""){
 		alert("不能有空。");
 		return ;
 	}
-	
 	$.ajax({
 		type : 'post',
-		url : "rest/product/updateProduct",
+		url : "rest/repaymentPlan/repayment",
 		async : true,
 		data : datasource,
 		cache : false,
@@ -154,29 +195,21 @@ function save(){
 			if(data != "error"){
 				$('#light').css("display","none");
 				$('#fade').css("display","none");
-				alert("保存成功。");
+				alert("提交成功。");
 				$('#reportTable').bootstrapTable('refresh');
 			}else{
-				alert("保存失败.");
+				alert("提交失败.");
 			}
 		},
 		error : function(data, status) {
-			alert("保存失败。");
+			alert("请求失败。");
 		},
 	});
-}
-
-function newRole(){
-	$('#id').val("");
-	$('#roleName').val("");
-	$('#roleSign').val("");
-	$('#description').val("");
-	$('#light').css("display","block");
-	$('#fade').css("display","block");
+	
 }
 
 function getIdSelections() {
     return $.map($('#reportTable').bootstrapTable('getSelections'), function (row) {
-        return row.id
+        return row;
     });
 }

@@ -252,6 +252,6 @@ function newPermission(){
 
 function getIdSelections() {
     return $.map($('#reportTable').bootstrapTable('getSelections'), function (row) {
-        return row.id
+        return row.id;
     });
 }

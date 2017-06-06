@@ -31,8 +31,11 @@
 <!-- BEGIN BODY-->
 <div class="row">
 	<div id="toolbar">
-        <button id="add" class="btn btn-primary" onclick="newRow()">
-            <i class="glyphicon glyphicon-plus"></i> 新增
+        <button id="repayment" class="btn btn-primary" disabled>
+            <i class="glyphicon glyphicon-plus"></i> 还款
+        </button>
+        <button id="overDue" class="btn btn-primary" disabled>
+            <i class="glyphicon glyphicon-plus"></i> 逾期等登记
         </button>
     </div>
 	<div class="col-lg-12">
@@ -41,29 +44,23 @@
 	</div>
 		<div id="light" class="white-pink white_content box-shadow-3">
 			<div class="divcontext">
-				<h1>用户管理
-					<span>用户详细信息</span>
+				<h1>还款
+					<span>还款详细信息</span>
 				</h1>
 				<div class="bd">
 					<table>
 						<tr style="display: none;">
-							<td><input id="id" type="text"/></td>
+							<td><input id="pan_id" type="text"/></td>
 						</tr>
 						<tr>
-							<td class="tb">产品名称 :</td>
-							<td class="text"><input id="productName" type="text" name="productName" placeholder="" /></td>
-							<td class="tb">最小金额 :</td>
-							<td class="text"><input id="minAmt" type="text" name="minAmt" placeholder=""></input></td>
+							<td class="tb">还款金额：</td>
+							<td class="text"><input id="pay" type="text" name="pay" placeholder="" /></td>
 						</tr>
 						<tr>
-							<td class="tb">最大金额 :</td>
-							<td class="text"><input id="maxAmt" type="text" name="maxAmt" placeholder="" /></td>
-							<td class="tb">日利率(‱) :</td>
-							<td class="text"><input id="rate" type="text" name="rate" placeholder="" /></td>
-						</tr>
-						<tr>
-							<td class="tb">最长用款期限（天） :</td>
-							<td class="text"><input id="useDate" type="text" name="useDate" placeholder="" /></td>
+							<td class="tb">还款的本金 :</td>
+							<td class="text"><input id="pay_corpus" type="text" name="pay_corpus" placeholder="" disabled/></td>
+							<td class="tb">还款的利息 :</td>
+							<td class="text"><input id="pay_accrual" type="text" name="pay_accrual" placeholder="" disabled/></td>
 						</tr>
 					</table>
 					<div class="ft">

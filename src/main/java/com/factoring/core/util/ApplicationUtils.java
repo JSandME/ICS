@@ -2,6 +2,7 @@ package com.factoring.core.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.UUID;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -62,5 +63,17 @@ public class ApplicationUtils {
     {
         return (new SimpleDateFormat("yyyy-MM-dd")).format(Calendar.getInstance().getTime());
     }
+    
+    public static int daysOfTwo(Date fDate, Date oDate) {
+
+        Calendar aCalendar = Calendar.getInstance();
+        aCalendar.setTime(fDate);
+        int day1 = aCalendar.get(Calendar.DAY_OF_YEAR);
+        aCalendar.setTime(oDate);
+        int day2 = aCalendar.get(Calendar.DAY_OF_YEAR);
+
+        return day2 - day1;
+
+     }
 
 }
