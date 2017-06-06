@@ -155,6 +155,7 @@ $(function() {
 					
 					var datasource ={};
 					datasource.id = row[0].id;
+					datasource.appId = row[0].app_id;
 					datasource.repayState = '2';
 					
 					$.ajax({

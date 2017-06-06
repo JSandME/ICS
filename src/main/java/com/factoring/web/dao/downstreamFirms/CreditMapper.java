@@ -1,5 +1,7 @@
 package com.factoring.web.dao.downstreamFirms;
 
+import java.util.Map;
+
 import com.factoring.core.generic.GenericDao;
 import com.factoring.web.model.downstreamFirms.Credit;
 

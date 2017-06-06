@@ -1,6 +1,5 @@
 package com.factoring.web.controller.factor;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -17,9 +16,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.factoring.core.util.ApplicationUtils;
 import com.factoring.core.util.JsonUtil;
+import com.factoring.web.model.downstreamFirms.Credit;
+import com.factoring.web.model.downstreamFirms.FinancingApply;
 import com.factoring.web.model.factor.RepaymentDetail;
 import com.factoring.web.model.factor.RepaymentPlan;
 import com.factoring.web.security.RoleSign;
+import com.factoring.web.service.downstreamFirms.CreditService;
+import com.factoring.web.service.downstreamFirms.FinancingApplyService;
 import com.factoring.web.service.factor.RepaymentDetailService;
 import com.factoring.web.service.factor.RepaymentPlanService;
 
@@ -40,6 +43,12 @@ public class RepaymentPlanController {
 	
 	@Resource
 	private RepaymentDetailService repaymentDetailService;
+	
+	@Resource
+	private FinancingApplyService financingApplyService;
+	
+	@Resource
+	private CreditService creditService;
 	
     @RequestMapping(value = "/page")
     @RequiresRoles(value= {RoleSign.FACTOR})
@@ -116,7 +125,7 @@ public class RepaymentPlanController {
     @RequestMapping(value = "/overDue")
 	@ResponseBody
 	@RequiresRoles(value= {RoleSign.FACTOR})
-    public String overDue(RepaymentPlan plan){
+    public String overDue(RepaymentPlan plan,String appId){
     	System.out.println("plan==>" + plan.getAppAmt());
     	Subject subject = SecurityUtils.getSubject();
 		String username = String.valueOf(subject.getPrincipal());
@@ -129,6 +138,13 @@ public class RepaymentPlanController {
     	if(i == 0){
     		return "error";
     	}
+    	
+    	FinancingApply financingApply = financingApplyService.selectByPrimaryKey(appId);
+    	Credit credit = creditService.selectCreditByUserName(financingApply.getUsername());
+    	credit.setStar(String.valueOf(Integer.valueOf(credit.getStar()) - 1));
+    	credit.setBadRecord(credit.getBadRecord() + 1);
+    	i = creditService.updateByPrimaryKeySelective(credit);
+    	
     	return "success";
     }
 

@@ -6,7 +6,7 @@ public class Credit {
 	
 	private String username;
 	
-	private char star;
+	private String star;
 	
 	private int badRecord;
 	
@@ -36,11 +36,11 @@ public class Credit {
 		this.username = username;
 	}
 
-	public char getStar() {
+	public String getStar() {
 		return star;
 	}
 
-	public void setStar(char star) {
+	public void setStar(String star) {
 		this.star = star;
 	}
 
