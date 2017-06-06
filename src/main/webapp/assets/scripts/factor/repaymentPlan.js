@@ -121,15 +121,15 @@ $(function() {
 					}
 					if(row.repay_state == "未还清"){
 						$('#repayment').prop('disabled', !$('#reportTable').bootstrapTable('getSelections').length);
+						var d1 = new Date((row.end_date).replace(/\-/g, "\/"));  
+						var now = new Date();
+						if(d1 < now){
+							$('#overDue').prop('disabled', !$('#reportTable').bootstrapTable('getSelections').length);
+						}
 					}
 					
 					if(row.repay_state == "已逾期"){
 						
-						var d1 = new Date((row.end_date).replace(/\-/g, "\/"));  
-			            var now = new Date();
-			            if(d1 < now){
-			            	$('#overDue').prop('disabled', !$('#reportTable').bootstrapTable('getSelections').length);
-			            }
 					}
 
 		        });
@@ -151,7 +151,32 @@ $(function() {
 		        });
 				
 				$('#overDue').click(function () {
+					var row = getIdSelections();
 					
+					var datasource ={};
+					datasource.id = row[0].id;
+					datasource.repayState = '2';
+					
+					$.ajax({
+						type : 'post',
+						url : "rest/repaymentPlan/overDue",
+						async : true,
+						data : datasource,
+						cache : false,
+						success : function(data ,status){
+							if(data != "error"){
+								$('#light').css("display","none");
+								$('#fade').css("display","none");
+								alert("提交成功。");
+								$('#reportTable').bootstrapTable('refresh');
+							}else{
+								alert("提交失败.");
+							}
+						},
+						error : function(data, status) {
+							alert("请求失败。");
+						},
+					});
 					 $('#overDue').prop('disabled', true);
 				});
 				

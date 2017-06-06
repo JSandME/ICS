@@ -112,5 +112,24 @@ public class RepaymentPlanController {
     	
     	return "success";
     }
+    
+    @RequestMapping(value = "/overDue")
+	@ResponseBody
+	@RequiresRoles(value= {RoleSign.FACTOR})
+    public String overDue(RepaymentPlan plan){
+    	System.out.println("plan==>" + plan.getAppAmt());
+    	Subject subject = SecurityUtils.getSubject();
+		String username = String.valueOf(subject.getPrincipal());
+		String time = ApplicationUtils.getCurrentTime();
+		
+		plan.setModifiedTime(time);
+		plan.setModifierId(username);
+    	
+    	int i = repaymentPlanService.updateByPrimaryKeySelective(plan);
+    	if(i == 0){
+    		return "error";
+    	}
+    	return "success";
+    }
 
 }
