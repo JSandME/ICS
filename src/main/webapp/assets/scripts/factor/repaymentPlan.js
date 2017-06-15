@@ -138,7 +138,7 @@ $(function() {
 		            var row = getIdSelections();
 		            /*$('#reportTable').bootstrapTable('remove', {
 		                field: 'id',
-		                values: ids
+		                values: row
 		            });*/
 		            $('#pan_id').val("");
 		        	$('#pay').val("");

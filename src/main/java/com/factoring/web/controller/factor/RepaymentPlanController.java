@@ -91,7 +91,6 @@ public class RepaymentPlanController {
 		    				* Double.valueOf(plan.getUnpayCorpus()) 
 		    				* Double.valueOf(plan.getRate()) 
 		    				* 0.0001));
-		    		System.out.println("1===>" + Double.valueOf(plan.getUnpayCorpus()));
 		    		if(Double.valueOf(plan.getUnpayCorpus()) == 0){
 		    			plan.setRepayState("1");
 		    		}
@@ -126,7 +125,6 @@ public class RepaymentPlanController {
 	@ResponseBody
 	@RequiresRoles(value= {RoleSign.FACTOR})
     public String overDue(RepaymentPlan plan,String appId){
-    	System.out.println("plan==>" + plan.getAppAmt());
     	Subject subject = SecurityUtils.getSubject();
 		String username = String.valueOf(subject.getPrincipal());
 		String time = ApplicationUtils.getCurrentTime();

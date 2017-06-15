@@ -66,7 +66,7 @@ public class FinancingController {
 			model.addAttribute("validMenoy", validMenoy);
 		}else{
 			credit = new Credit();
-			credit.setStar('6');
+			credit.setStar("6");
 			credit.setBadRecord(0);
 			setInfo(credit);
 			creditService.insertSelective(credit);
@@ -264,16 +264,6 @@ public class FinancingController {
 		record.setRecordState("0");
 		
 		return record;
-	}
-	
-	public static void main(String[] args) {
-		Date date = new Date();//取时间 
-	    Calendar calendar = new GregorianCalendar(); 
-	    calendar.setTime(date); 
-	    calendar.add(calendar.DATE,60);//把日期往后增加一天.整数往后推,负数往前移动 
-	    date=calendar.getTime();   //这个时间就是日期往后推一天的结果 
-	    
-	    System.out.println((new SimpleDateFormat("yyyy-MM-dd")).format(date));
 	}
 
 }
