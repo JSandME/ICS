@@ -210,7 +210,9 @@ public class FinancingController {
 		financingApply.setModifiedTime(time);
 		
 		int i = financingApplyService.updateByPrimaryKeySelective(financingApply);
-		if(i != 0){
+		System.out.println("financingApply.getState():" + financingApply.getState());
+		System.out.println("financingApply.getState().equals()" + financingApply.getState().equals("9"));
+		if(i != 0 && !financingApply.getState().equals("9")){
 			financingApply = financingApplyService.selectByPrimaryKey(financingApply.getId());
 			
 			Date date = new Date();//取时间 
@@ -239,6 +241,10 @@ public class FinancingController {
 			model.setRecordState("0");
 			repaymentPlanService.insertSelective(model);
 			return "";
+		}else{
+			if(financingApply.getState().equals("9")){
+				return "";
+			}
 		}
 		return "error";
 	}
