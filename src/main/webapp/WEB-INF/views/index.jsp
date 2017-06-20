@@ -114,7 +114,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                         </li>
 						
                         
-                        <shiro:hasAnyRoles name="admin,factor">
+                        <shiro:hasAnyRoles name="admin,factor,downstream_firms">
                         <li class="">
 	                            <a href="javascript:;">
 	                                <i class="fa fa-list-alt"></i><span class="title"> 功能 </span>
